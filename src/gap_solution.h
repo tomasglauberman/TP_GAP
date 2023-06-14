@@ -8,15 +8,11 @@ using namespace std;
 
 class GapSolution{
     public:
+    GapSolution();
     GapSolution(int store, int seller);
     void assign(int store, int seller);
     bool isSellerAssign(int seller);
-    int remainingCapacity(int store);
-    float getObjetiveValue();
-
-
-
-
+    void outputSolution(string filename);
 
     private:
     int _sellers;
@@ -24,8 +20,5 @@ class GapSolution{
     //posicion j nos dice a que deposito fue asignado el vendedor j
     vector<int> _sellers_assignment;
     //posicion i tiene un set con los vendedores asignados al deposito i
-    vector<set<int>> _stroe_assignment;
-    //Posicion i nos dice la capacidad remanente del deposito i
-    vector<int> _remaining_capacity;
-    float _objetive_value;
+    vector<set<int>> _store_assignment;
 };

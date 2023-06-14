@@ -5,40 +5,46 @@ GapInstance :: GapInstance(string filename){
     char delim = ' ';
     string line;
     input_file >> line;
-    this->depositos = stoi(line);
+    this->_stores = stoi(line);
     input_file >> line;
-    this->vendedores = stoi(line);
-    this->demandas = vector<vector<int>>(this->depositos, vector<int>(this->vendedores));
-    this->costos = vector<vector<float>>(this->depositos, vector<float>(this->vendedores));
-    this->capacidades = vector<int>(this->depositos);
+    this->_sellers = stoi(line);
+    this->supply = vector<vector<int>>(this->_stores, vector<int>(this->_sellers));
+    this->costs = vector<vector<float>>(this->_stores, vector<float>(this->_sellers));
+    this->capacities = vector<int>(this->_stores);
     this->d_max = 0;
-    for( int i = 0; i<this->depositos; i++){
-        for (int j = 0; j < this->vendedores; j++)
+    for( int i = 0; i<this->_stores; i++){
+        for (int j = 0; j < this->_sellers; j++)
         {
             input_file >> line;
-            this->costos[i][j] = stof(line);
+            this->costs[i][j] = stof(line);
             if (stof(line) > this->d_max){
                 this->d_max = stof(line);
             }
         }
         
     }
-    for( int i = 0; i<this->depositos; i++){
-        for (int j = 0; j < this->vendedores; j++)
+    for( int i = 0; i<this->_stores; i++){
+        for (int j = 0; j < this->_sellers; j++)
         {
             input_file >> line;
-            this->demandas[i][j] = stof(line);
+            this->supply[i][j] = stof(line);
         }
         
     }
-    for (int i = 0; i < this->depositos; i++)
+    for (int i = 0; i < this->_stores; i++)
     {
         input_file >> line;
-        this->capacidades[i] = stoi(line);
+        this->capacities[i] = stoi(line);
     }
     
-
 }
+
+int GapInstance :: getM(){
+    return this->_stores;
+};
+int GapInstance :: getN(){
+    return this->_sellers;
+};
 
 
 
