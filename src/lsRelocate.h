@@ -1,5 +1,5 @@
-#ifndef GREEDY_SOLVER_1_H
-#define GREEDY_SOLVER_1_H
+#ifndef LS_RELOCATE_H
+#define LS_RELOCATE_H
 
 #include<vector>
 #include<string>
@@ -8,14 +8,16 @@ using namespace std;
 #include "gap_instance.h"
 #include "gap_solution.h"
 
-class GreedySolver1{
+class LocalSearchRelocate{
     public:
-    GreedySolver1();
-    GreedySolver1(GapInstance const &instance);
-    void solve();
+    LocalSearchRelocate();
+    LocalSearchRelocate(GapInstance &instance);
+    void solve(GapSolution &solution);
     float getObjetiveValue();
     int getRemainingCapacity(int store);
     GapSolution getSolution();
+
+    vector<int> getBestRelocate();
 
 
     private:

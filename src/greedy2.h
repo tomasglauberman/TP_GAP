@@ -1,5 +1,5 @@
-#ifndef GREEDY_SOLVER_1_H
-#define GREEDY_SOLVER_1_H
+#ifndef GREEDY_SOLVER_2_H
+#define GREEDY_SOLVER_2_H
 
 #include<vector>
 #include<string>
@@ -8,10 +8,10 @@ using namespace std;
 #include "gap_instance.h"
 #include "gap_solution.h"
 
-class GreedySolver1{
+class GreedySolver2{
     public:
-    GreedySolver1();
-    GreedySolver1(GapInstance const &instance);
+    GreedySolver2();
+    GreedySolver2(GapInstance &instance);
     void solve();
     float getObjetiveValue();
     int getRemainingCapacity(int store);

@@ -42,10 +42,10 @@ GapInstance :: GapInstance(string filename){
     
 }
 
-int GapInstance :: getM(){
+int GapInstance :: getM() const {
     return this->_stores;
 };
-int GapInstance :: getN(){
+int GapInstance :: getN() const{
     return this->_sellers;
 };
 

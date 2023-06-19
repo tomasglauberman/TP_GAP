@@ -12,9 +12,9 @@ class GapInstance{
     GapInstance();
     GapInstance(string filename);
     //Me da la cantidad de depositos
-    int getM();
+    int getM() const;
     //Me da la cantidad de vendedores
-    int getN();
+    int getN() const;
 
     int getSupply(int store, int seller);
     int getCapacity(int store);
