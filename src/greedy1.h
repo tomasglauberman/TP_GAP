@@ -1,3 +1,6 @@
+#ifndef GREEDY_SOLVER_1_H
+#define GREEDY_SOLVER_1_H
+
 #include<vector>
 #include<string>
 #include<iostream>
@@ -19,3 +22,5 @@ class GreedySolver1{
     GapInstance _instance;
     GapSolution _solution;
 };
+
+#endif

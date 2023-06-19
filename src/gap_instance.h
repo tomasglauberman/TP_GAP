@@ -1,3 +1,6 @@
+#ifndef GAP_INSTANCE_H
+#define GAP_INSTANCE_H
+
 #include<vector>
 #include<string>
 #include<fstream>
@@ -12,16 +15,24 @@ class GapInstance{
     int getM();
     //Me da la cantidad de vendedores
     int getN();
-    // posicion ij representa la cant de 
-    //unidades a utilizar en el deposito i por el vendedor j
-    vector<vector<int>> supply;
-    //Posicion i representa la capacidad del deposito i
-    vector<int> capacities;
-    //posicion ij representa el costo de asignar el deposito i al vendedor j
-    vector<vector<float>> costs;
-    float d_max;
+
+    int getSupply(int store, int seller);
+    int getCapacity(int store);
+    float getCost(int store, int seller);
+    float getDMax();
 
     private:
     int _stores;
     int _sellers;
+
+    // posicion ij representa la cant de 
+    //unidades a utilizar en el deposito i por el vendedor j
+    vector<vector<int>> _supply;
+    //Posicion i representa la capacidad del deposito i
+    vector<int> _capacities;
+    //posicion ij representa el costo de asignar el deposito i al vendedor j
+    vector<vector<float>> _costs;
+    float _d_max;
 };
+
+#endif
