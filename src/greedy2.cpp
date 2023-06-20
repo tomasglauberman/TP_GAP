@@ -6,12 +6,12 @@ GreedySolver2::GreedySolver2(){}
 GreedySolver2 :: GreedySolver2(GapInstance &instance){
     this->_instance = instance;
     this->_objective_value = 0;
-    this->_remaining_capacity = vector<int>(this->_instance.getM());
+    this->_remaining_capacity = vector<int>(instance.getM());
     this->_solution = GapSolution(this->_instance);
 
-    for (int i = 0; i < this->_instance.getM(); i++)
+    for (int i = 0; i < instance.getM(); i++)
     {
-        this->_remaining_capacity[i] = this->_instance.getCapacity(i);
+        this->_remaining_capacity[i] = instance.getCapacity(i);
     }  
 };
 

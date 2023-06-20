@@ -2,17 +2,21 @@
 #include "greedy1.h"
 #include <chrono>
 
+
+//Estamos mezclando los vectores de capacidad remanente de la clase solution con los de lsrelocate
+
+
 LocalSearchRelocate::LocalSearchRelocate(){}
 
 
 LocalSearchRelocate :: LocalSearchRelocate(GapInstance &instance){
     this->_instance = instance;
     this->_objective_value = 0;
-    this->_remaining_capacity = vector<int>(this->_instance.getM());
+    this->_remaining_capacity = vector<int>(_instance.getM());
 
-    for (int i = 0; i < this->_instance.getM(); i++)
+    for (int i = 0; i < instance.getM(); i++)
     {
-        this->_remaining_capacity[i] = this->_instance.getCapacity(i);
+        this->_remaining_capacity[i] = _instance.getCapacity(i);
     }  
 };
 
@@ -33,16 +37,16 @@ void LocalSearchRelocate :: solve(GapSolution &solution){
 
         cout<< mejora << " " << change_seller << " " << initial_store << " " << final_store << endl;
 
-        // if (mejora < 0) {
-        //     this->_solution.unassign(initial_store, change_seller);
-        //     // if(!this->_solution.isSellerAssign(change_seller)) {
-        //     //     this->_solution.assign(final_store, change_seller);
-        //     //     // La mejora es negatviva 
-        //     //     this->_objective_value += mejora;
-        //     // }
-        // } else {
-        //     search = false;
-        // }
+        if (mejora < 0) {
+            this->_solution.unassign(initial_store, change_seller);
+            if(!this->_solution.isSellerAssign(change_seller)) {
+                this->_solution.assign(final_store, change_seller);
+                // La mejora es negatviva 
+                this->_objective_value += mejora;
+            }
+        } else {
+            search = false;
+        }
 
     }
 
@@ -54,7 +58,7 @@ void LocalSearchRelocate :: solve(GapSolution &solution){
 
     this->_solution.setObjVal(this->_objective_value);
 
-    std::cout << this->_solution.getObjVal() << std::endl;
+    //std::cout << this->_solution.getObjVal() << std::endl;
 
     // std::cout << this->_solution << std::endl;
 

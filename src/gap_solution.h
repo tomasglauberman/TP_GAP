@@ -18,12 +18,12 @@ class GapSolution{
     ~GapSolution();
     void assign(int store, int seller);
     void unassign(int store, int seller);
-    bool isSellerAssign(int seller);
+    bool isSellerAssign(int seller) const;
 
     int getStoreAssigned(int seller) const;
     void outputSolution(string filename);
     void setTime(double time);
-    double getTime();
+    double getTime() const;
 
     void setObjVal(float val);
     float getObjVal() const;

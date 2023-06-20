@@ -17,10 +17,10 @@ class GapInstance{
     //Me da la cantidad de vendedores
     int getN() const;
 
-    int getSupply(int store, int seller);
-    int getCapacity(int store);
-    float getCost(int store, int seller);
-    float getDMax();
+    int getSupply(int store, int seller) const;
+    int getCapacity(int store) const;
+    float getCost(int store, int seller) const;
+    float getDMax() const;
 
     private:
     int _stores;

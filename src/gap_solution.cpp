@@ -23,11 +23,11 @@ void GapSolution :: assign(int store, int seller) {
 
 void GapSolution::unassign(int store, int seller) {
     this->_sellers_assignment[seller] = -1;
-    std::cout << this->_remaining_capacity[store] << std::endl;
+    //std::cout << this->_remaining_capacity[store] << std::endl;
     this->_remaining_capacity[store] += this->_instance.getSupply(store,seller);
 }
 
-bool GapSolution :: isSellerAssign(int seller){
+bool GapSolution :: isSellerAssign(int seller) const{
     if (this->_sellers_assignment[seller] == -1){
         return false;
     }
@@ -38,7 +38,7 @@ void GapSolution::setTime(double time) {
     this->_time = time;
 }
 
-double GapSolution::getTime() {
+double GapSolution::getTime() const{
     return this->_time;
 }
 

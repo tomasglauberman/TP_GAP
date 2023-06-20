@@ -51,19 +51,19 @@ int GapInstance :: getN() const{
     return this->_sellers;
 };
 
-int GapInstance::getSupply(int store, int seller) {
+int GapInstance::getSupply(int store, int seller) const{
     return this->_supply[store][seller];
 }
 
-int GapInstance::getCapacity(int store) {
+int GapInstance::getCapacity(int store) const{
     return this->_capacities[store];
 }
 
-float GapInstance::getCost(int store, int seller) {
+float GapInstance::getCost(int store, int seller) const{
     return this->_costs[store][seller];
 }
 
-float GapInstance::getDMax() {
+float GapInstance::getDMax() const{
     return this->_d_max;
 }
 

@@ -9,7 +9,7 @@
 
 
 int main(int argc, char** argv) {
-    std::string filename = "instances/gap/gap_a/a05100";
+    std::string filename = "instances/real/real_instance";
     std::cout << "Reading file " << filename << std::endl;
     
     GapInstance instancia = GapInstance(filename);
@@ -17,10 +17,11 @@ int main(int argc, char** argv) {
 
     greedySovler1.solve();
     GapSolution solucion = greedySovler1.getSolution();
-    std::cout<<solucion<<std::endl;
-    // LocalSearchRelocate localSearch = LocalSearchRelocate(instancia);
-    // localSearch.solve(solucion);
-
+    std::cout<<solucion.getObjVal()<<" "<<solucion.getTime()<<std::endl;
+    LocalSearchRelocate localSearch = LocalSearchRelocate(instancia);
+    localSearch.solve(solucion);
+    GapSolution solRel = localSearch.getSolution();
+    std::cout<<solRel.getObjVal()<<" "<<solRel.getTime()<<std::endl;
     // std::cout << "Objetive value: " << localSearch.getSolution() << std::endl;
 
 

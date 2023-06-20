@@ -9,9 +9,9 @@ GreedySolver1 :: GreedySolver1(GapInstance &instance){
     this->_remaining_capacity = vector<int>(this->_instance.getM());
     this->_solution = GapSolution(this->_instance);
 
-    for (int i = 0; i < this->_instance.getM(); i++)
+    for (int i = 0; i < instance.getM(); i++)
     {
-        this->_remaining_capacity[i] = this->_instance.getCapacity(i);
+        this->_remaining_capacity[i] = instance.getCapacity(i);
     }  
 };
 

@@ -15,8 +15,8 @@ class GreedySolver1{
    
     ~GreedySolver1();
     void solve();
-    float getObjetiveValue();
-    int getRemainingCapacity(int store);
+    float getObjetiveValue() const;
+    int getRemainingCapacity(int store) const;
     GapSolution getSolution();
 
 
