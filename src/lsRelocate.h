@@ -12,6 +12,7 @@ class LocalSearchRelocate{
     public:
     LocalSearchRelocate();
     LocalSearchRelocate(GapInstance &instance);
+    ~LocalSearchRelocate();
     void solve(GapSolution &solution);
     float getObjetiveValue();
     int getRemainingCapacity(int store);

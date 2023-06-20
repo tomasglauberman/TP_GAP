@@ -11,6 +11,7 @@ class GapInstance{
     public:
     GapInstance();
     GapInstance(string filename);
+    ~GapInstance();
     //Me da la cantidad de depositos
     int getM() const;
     //Me da la cantidad de vendedores

@@ -14,6 +14,7 @@ GapSolution :: GapSolution (GapInstance &instance){
         this->_remaining_capacity[i] = this->_instance.getCapacity(i);
     }  
 }
+GapSolution::~GapSolution(){}
 
 void GapSolution :: assign(int store, int seller) {
     this->_sellers_assignment[seller] = store;

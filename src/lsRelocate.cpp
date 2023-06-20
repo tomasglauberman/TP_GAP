@@ -16,6 +16,8 @@ LocalSearchRelocate :: LocalSearchRelocate(GapInstance &instance){
     }  
 };
 
+LocalSearchRelocate::~LocalSearchRelocate(){}
+
 void LocalSearchRelocate :: solve(GapSolution &solution){
 
     this->_solution = solution;
@@ -47,7 +49,7 @@ void LocalSearchRelocate :: solve(GapSolution &solution){
     auto start = std::chrono::high_resolution_clock::now();
 
     auto end = std::chrono::high_resolution_clock::now();
-    int64_t duration = std::chrono::duration_cast<std::chrono::microseconds>(end -start).count();
+    int64_t duration = std::chrono::duration_cast<std::chrono::milliseconds>(end -start).count();
     this->_solution.setTime(double(duration));
 
     this->_solution.setObjVal(this->_objective_value);

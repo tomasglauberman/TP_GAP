@@ -17,11 +17,11 @@ int main(int argc, char** argv) {
 
     greedySovler1.solve();
     GapSolution solucion = greedySovler1.getSolution();
+    std::cout<<solucion<<std::endl;
+    // LocalSearchRelocate localSearch = LocalSearchRelocate(instancia);
+    // localSearch.solve(solucion);
 
-    LocalSearchRelocate localSearch = LocalSearchRelocate(instancia);
-    localSearch.solve(solucion);
-
-    std::cout << "Objetive value: " << localSearch.getSolution() << std::endl;
+    // std::cout << "Objetive value: " << localSearch.getSolution() << std::endl;
 
 
     return 0;

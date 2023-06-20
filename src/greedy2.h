@@ -12,6 +12,7 @@ class GreedySolver2{
     public:
     GreedySolver2();
     GreedySolver2(GapInstance &instance);
+    ~GreedySolver2();
     void solve();
     float getObjetiveValue();
     int getRemainingCapacity(int store);

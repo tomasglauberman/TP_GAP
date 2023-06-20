@@ -15,6 +15,8 @@ GreedySolver1 :: GreedySolver1(GapInstance &instance){
     }  
 };
 
+GreedySolver1::~GreedySolver1(){}
+
 void GreedySolver1 :: solve(){
 
 
@@ -43,7 +45,7 @@ void GreedySolver1 :: solve(){
     }
     
     auto end = std::chrono::high_resolution_clock::now();
-    int64_t duration = std::chrono::duration_cast<std::chrono::microseconds>(end -start).count();
+    int64_t duration = std::chrono::duration_cast<std::chrono::milliseconds>(end -start).count();
     this->_solution.setTime(double(duration));
 
     this->_solution.setObjVal(this->_objective_value);

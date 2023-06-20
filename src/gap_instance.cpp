@@ -42,6 +42,8 @@ GapInstance :: GapInstance(string filename){
     
 }
 
+GapInstance::~GapInstance(){}
+
 int GapInstance :: getM() const {
     return this->_stores;
 };

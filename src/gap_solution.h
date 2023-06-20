@@ -15,6 +15,7 @@ class GapSolution{
     public:
     GapSolution();
     GapSolution(GapInstance &instance);
+    ~GapSolution();
     void assign(int store, int seller);
     void unassign(int store, int seller);
     bool isSellerAssign(int seller);
