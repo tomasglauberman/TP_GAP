@@ -3,7 +3,7 @@
 
 GreedySolver1::GreedySolver1(){}
 
-GreedySolver1 :: GreedySolver1(GapInstance const &instance){
+GreedySolver1 :: GreedySolver1(GapInstance &instance){
     this->_instance = instance;
     this->_objective_value = 0;
     this->_remaining_capacity = vector<int>(this->_instance.getM());

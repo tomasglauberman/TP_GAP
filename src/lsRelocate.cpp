@@ -31,16 +31,16 @@ void LocalSearchRelocate :: solve(GapSolution &solution){
 
         cout<< mejora << " " << change_seller << " " << initial_store << " " << final_store << endl;
 
-        if (mejora < 0) {
-            this->_solution.unassign(initial_store, change_seller);
-            // if(!this->_solution.isSellerAssign(change_seller)) {
-            //     this->_solution.assign(final_store, change_seller);
-            //     // La mejora es negatviva 
-            //     this->_objective_value += mejora;
-            // }
-        } else {
-            search = false;
-        }
+        // if (mejora < 0) {
+        //     this->_solution.unassign(initial_store, change_seller);
+        //     // if(!this->_solution.isSellerAssign(change_seller)) {
+        //     //     this->_solution.assign(final_store, change_seller);
+        //     //     // La mejora es negatviva 
+        //     //     this->_objective_value += mejora;
+        //     // }
+        // } else {
+        //     search = false;
+        // }
 
     }
 

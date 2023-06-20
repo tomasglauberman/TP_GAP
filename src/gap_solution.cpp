@@ -2,7 +2,8 @@
 
 GapSolution::GapSolution() {}
 
-GapSolution :: GapSolution (GapInstance const &instance){
+GapSolution :: GapSolution (GapInstance &instance){
+    this->_instance = instance;
     this->_sellers = instance.getN();
     this->_stores = instance.getM();
     this->_sellers_assignment = vector<int>(this->_sellers,-1);
@@ -21,6 +22,7 @@ void GapSolution :: assign(int store, int seller) {
 
 void GapSolution::unassign(int store, int seller) {
     this->_sellers_assignment[seller] = -1;
+    std::cout << this->_remaining_capacity[store] << std::endl;
     this->_remaining_capacity[store] += this->_instance.getSupply(store,seller);
 }
 

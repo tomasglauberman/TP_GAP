@@ -14,7 +14,7 @@ using namespace std;
 class GapSolution{
     public:
     GapSolution();
-    GapSolution(GapInstance const &instance);
+    GapSolution(GapInstance &instance);
     void assign(int store, int seller);
     void unassign(int store, int seller);
     bool isSellerAssign(int seller);

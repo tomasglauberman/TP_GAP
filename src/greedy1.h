@@ -11,7 +11,7 @@ using namespace std;
 class GreedySolver1{
     public:
     GreedySolver1();
-    GreedySolver1(GapInstance const &instance);
+    GreedySolver1(GapInstance &instance);
     void solve();
     float getObjetiveValue();
     int getRemainingCapacity(int store);
