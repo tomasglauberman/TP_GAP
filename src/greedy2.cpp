@@ -5,14 +5,7 @@ GreedySolver2::GreedySolver2(){}
 
 GreedySolver2 :: GreedySolver2(GapInstance &instance){
     this->_instance = instance;
-    this->_objective_value = 0;
-    this->_remaining_capacity = vector<int>(instance.getM());
     this->_solution = GapSolution(this->_instance);
-
-    for (int i = 0; i < instance.getM(); i++)
-    {
-        this->_remaining_capacity[i] = instance.getCapacity(i);
-    }  
 };
 
 GreedySolver2::~GreedySolver2(){}
@@ -47,35 +40,30 @@ void GreedySolver2::solve(){
         float min_dist = 100000;
         for (int i = 0; i < this->_instance.getM(); i++)
         {
-            if((this->_instance.getCost(i, sellers_sort[j]) < min_dist) && (this->_remaining_capacity[i] >= this->_instance.getSupply(i,sellers_sort[j]))){
+            if((this->_instance.getCost(i, sellers_sort[j]) < min_dist) && (this->_solution.getRemainingCapacity(i) >= this->_instance.getSupply(i,sellers_sort[j]))){
                 min_store = i;
                 min_dist = this->_instance.getCost(i, sellers_sort[j]);
             }
         }
-        if(min_store == -1){
-            this->_objective_value += this->_instance.getDMax() * 3;   
-        } else {
+        if(!(min_store == -1)){  
             this->_solution.assign(min_store, sellers_sort[j]);
-            this->_objective_value += min_dist;
-            this->_remaining_capacity[min_store] -= this->_instance.getSupply(min_store,sellers_sort[j]);
         }
           
     }
     
     auto end = std::chrono::high_resolution_clock::now();
-    int64_t duration = std::chrono::duration_cast<std::chrono::milliseconds>(end -start).count();
+    int64_t duration = std::chrono::duration_cast<std::chrono::microseconds>(end -start).count();
     this->_solution.setTime(double(duration));
 
-    this->_solution.setObjVal(this->_objective_value);
 
-    std::cout << this->_solution.getObjVal() << std::endl;
+    //std::cout << this->_solution.getObjVal() << std::endl;
     // std::cout << this->_solution << std::endl;
 
-    for(int i = 0; i<this->_instance.getM(); i++){
-        std::cout << "Store " << i << " remaining capacity: " << this->_remaining_capacity[i] << std::endl;
-    }
+    // for(int i = 0; i<this->_instance.getM(); i++){
+    //     std::cout << "Store " << i << " remaining capacity: " << this->_solution.getRemainingCapacity(i) << std::endl;
+    // }
 
-    std::cout << this->_solution.checkFeasibility(this->_instance) << std::endl;
+    // std::cout << this->_solution.checkFeasibility(this->_instance) << std::endl;
 } 
 
 GapSolution GreedySolver2::getSolution(){

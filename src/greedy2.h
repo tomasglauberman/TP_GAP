@@ -14,14 +14,10 @@ class GreedySolver2{
     GreedySolver2(GapInstance &instance);
     ~GreedySolver2();
     void solve();
-    float getObjetiveValue();
-    int getRemainingCapacity(int store);
     GapSolution getSolution();
 
 
     private:
-    float _objective_value;
-    vector<int> _remaining_capacity;
     GapInstance _instance;
     GapSolution _solution;
 };

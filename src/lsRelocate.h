@@ -7,6 +7,7 @@
 using namespace std;
 #include "gap_instance.h"
 #include "gap_solution.h"
+#include <tuple>
 
 class LocalSearchRelocate{
     public:
@@ -14,16 +15,11 @@ class LocalSearchRelocate{
     LocalSearchRelocate(GapInstance &instance);
     ~LocalSearchRelocate();
     void solve(GapSolution &solution);
-    float getObjetiveValue();
-    int getRemainingCapacity(int store);
     GapSolution getSolution();
-
-    vector<int> getBestRelocate();
+    tuple<float, int, int, int> getBestRelocate();
 
 
     private:
-    float _objective_value;
-    vector<int> _remaining_capacity;
     GapInstance _instance;
     GapSolution _solution;
 };

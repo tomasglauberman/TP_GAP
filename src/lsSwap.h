@@ -1,5 +1,5 @@
-#ifndef GREEDY_SOLVER_1_H
-#define GREEDY_SOLVER_1_H
+#ifndef LS_SWAP_H
+#define LS_SWAP_H
 
 #include<vector>
 #include<string>
@@ -8,18 +8,22 @@ using namespace std;
 #include "gap_instance.h"
 #include "gap_solution.h"
 
-class GreedySolver1{
+
+
+class LocalSearchSwap{
     public:
-    GreedySolver1();
-    GreedySolver1(GapInstance &instance);   
-    ~GreedySolver1();
-    void solve();
+    LocalSearchSwap();
+    LocalSearchSwap(GapInstance &instance);
+    ~LocalSearchSwap();
+    void solve(GapSolution &solution);
+    tuple<int,int> getBestSwap();
     GapSolution getSolution();
 
-
+    
     private:
     GapInstance _instance;
     GapSolution _solution;
 };
+
 
 #endif

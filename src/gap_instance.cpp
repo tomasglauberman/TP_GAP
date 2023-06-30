@@ -39,7 +39,7 @@ GapInstance :: GapInstance(string filename){
         input_file >> line;
         this->_capacities[i] = stoi(line);
     }
-    
+    //std::cout << this->_d_max<<std::endl;
 }
 
 GapInstance::~GapInstance(){}

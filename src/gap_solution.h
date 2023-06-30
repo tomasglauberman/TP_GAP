@@ -19,23 +19,18 @@ class GapSolution{
     void assign(int store, int seller);
     void unassign(int store, int seller);
     bool isSellerAssign(int seller) const;
-
     int getStoreAssigned(int seller) const;
     void outputSolution(string filename);
+    //Falta hacer output solution
     void setTime(double time);
     double getTime() const;
-
-    void setObjVal(float val);
     float getObjVal() const;
-
     int getRemainingCapacity(int store) const;
     bool checkFeasibility(GapInstance &instance);
-
+    int getNotAssigned() const;
     friend std::ostream& operator<<(std::ostream& os, const GapSolution& solution);
 
     private:
-    int _sellers;
-    int _stores;
     GapInstance _instance;
     float _obj_value;
     double _time;
@@ -43,6 +38,7 @@ class GapSolution{
     vector<int> _sellers_assignment;
     //posicion i tiene un set con los vendedores asignados al deposito i
     vector<int> _remaining_capacity;
+    int _not_assigned;
 };
 
 #endif

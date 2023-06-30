@@ -25,7 +25,6 @@ class GapInstance{
     private:
     int _stores;
     int _sellers;
-
     // posicion ij representa la cant de 
     //unidades a utilizar en el deposito i por el vendedor j
     vector<vector<int>> _supply;
