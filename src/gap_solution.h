@@ -32,7 +32,7 @@ class GapSolution{
     int getRemainingCapacity(int store) const;
     bool checkFeasibility(GapInstance &instance) const;
     int getNotAssigned() const;
-    
+    float getObjVal2() const;
     friend std::ostream& operator<<(std::ostream& os, const GapSolution& solution);
 
     private:
