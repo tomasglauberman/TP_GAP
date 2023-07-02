@@ -39,16 +39,26 @@ void LocalSearchSwap::solve(){
             search = false;
         }
         else{
-
+            //Tengo que verificar que los sellers no esten desasignados/asignados al fantasma
+            //antes de desasignarlos
             if(this->_solution.isSellerAssign(j1)) {
                 this->_solution.unassign(storej1, j1);
             }
             if (this->_solution.isSellerAssign(j2)) {
                 this->_solution.unassign(storej2, j2);
             }
-
-            this->_solution.assign(storej1, j2);
-            this->_solution.assign(storej2, j1);
+            
+            //Tengo que verificar que los stores no sean el fantasma para poder asignar
+            if (storej1 != this->_instance.getM()-1){
+                this->_solution.assign(storej1, j2);
+            }
+            if (storej2 != this->_instance.getM()-1)
+            {
+                this->_solution.assign(storej2, j1);
+            }
+            //No puedo asignar aca sin verificar que no sean fantasmas
+            // this->_solution.assign(storej1, j2);
+            // this->_solution.assign(storej2, j1);
         }
        
     }

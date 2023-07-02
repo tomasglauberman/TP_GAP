@@ -73,7 +73,7 @@ float GapSolution::getObjVal() const {
         vr += this->_instance.getCost(this->_sellers_assignment[j], j);
     }
     return vr;
-
+    //Quedo O(N) No podriamos hacerla O(1)??
     // return this->_obj_value;
 }
 
@@ -91,7 +91,7 @@ int GapSolution::getNotAssigned() const{
         }
     }
     return vr;
-
+    //Quedo O(N) No podriamos hacerla O(1)??
     // return this->_not_assigned;
 }
 
@@ -103,6 +103,9 @@ std::ostream& operator<<(std::ostream& os, const GapSolution& solution) {
     return os;
 }
 
+float GapSolution::getObjVal2() const{
+    return this->_obj_value;
+}
 
 bool GapSolution::checkFeasibility(GapInstance &instance) const {
 

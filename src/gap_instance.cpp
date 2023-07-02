@@ -32,7 +32,8 @@ GapInstance :: GapInstance(string filename){
     // Costos de penalizacion
     for (int j = 0; j < this->_sellers; j++)
     {
-        this->_costs[this->_stores-1][j] = this->_d_max;
+        this->_costs[this->_stores-1][j] = this->_d_max*3;
+        
     }
 
     // Demandas
@@ -50,13 +51,14 @@ GapInstance :: GapInstance(string filename){
     {
         this->_demand[this->_stores-1][j] = 0;
     }
-
+    // Capacidades
     for (int i = 0; i < this->_stores-1; i++)
     {
         input_file >> line;
         this->_capacities[i] = stoi(line);
     }
-    this->_capacities[this->_stores-1] = 1;
+    //Capacidad del deposito "fantasma" es "Infinito"
+    this->_capacities[this->_stores-1] = 1000000;
 
 }
 
