@@ -7,7 +7,7 @@
 #include "greedy2.h"
 #include "lsRelocate.h"
 #include "lsSwap.h"
-
+#include "genAlg.h"
 
 int main(int argc, char** argv) {
     // std::string filename = "instances/gap/gap_a/a20200";
@@ -20,7 +20,6 @@ int main(int argc, char** argv) {
     GapSolution solucion1 = greedySolver1.getSolution();
     std::cout<< "GREEDY 1" << std::endl << solucion1;
     std::cout<<"Factbilidad: " << solucion1.checkFeasibility(instancia)<<std::endl<< std::endl;
-
 
     GreedySolver2 greedySolver2 = GreedySolver2(instancia);
     greedySolver2.solve();
@@ -36,7 +35,7 @@ int main(int argc, char** argv) {
     std::cout<<"Factbilidad: " << solucion3.checkFeasibility(instancia)<<std::endl << std::endl;
 
 
-    LocalSearchSwap lsSwap = LocalSearchSwap(instancia, LocalSearchSwap::InitialSolution::GREEDY1);
+    LocalSearchSwap lsSwap = LocalSearchSwap(instancia, LocalSearchSwap::InitialSolution::RANDOM);
     lsSwap.solve(); 
     std::cout<< "LS SWAP" << std::endl << lsSwap.getSolution(); 
     std::cout<<"Factbilidad: " << lsSwap.getSolution().checkFeasibility(instancia)<<std::endl;

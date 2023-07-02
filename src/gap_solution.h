@@ -32,6 +32,8 @@ class GapSolution{
     int getRemainingCapacity(int store) const;
     bool checkFeasibility(GapInstance &instance) const;
     int getNotAssigned() const;
+
+    static GapSolution randomSolution(GapInstance instance, int seed=0);
     
     friend std::ostream& operator<<(std::ostream& os, const GapSolution& solution);
 

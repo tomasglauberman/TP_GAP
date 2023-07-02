@@ -131,3 +131,16 @@ bool GapSolution::checkFeasibility(GapInstance &instance) const {
 int GapSolution::getRemainingCapacity(int store) const {
     return this->_remaining_capacity[store];
 }
+
+
+GapSolution GapSolution::randomSolution(GapInstance instance, int seed) {
+    std::srand(seed);
+
+    GapSolution solution = GapSolution(instance);
+
+    for (int j = 0; j < instance.getN(); j++) {
+        int store = rand() % (instance.getM()-1);
+        solution.assign(store, j);
+    }
+    return solution;
+}
