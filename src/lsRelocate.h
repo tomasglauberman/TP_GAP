@@ -7,14 +7,18 @@
 using namespace std;
 #include "gap_instance.h"
 #include "gap_solution.h"
+#include "greedy1.h"
+#include "greedy2.h"
 #include <tuple>
 
 class LocalSearchRelocate{
     public:
+    enum InitialSolution {GREEDY1, GREEDY2, RANDOM};
+
     LocalSearchRelocate();
-    LocalSearchRelocate(GapInstance &instance);
+    LocalSearchRelocate(GapInstance instance, InitialSolution initialSolution);
     ~LocalSearchRelocate();
-    void solve(GapSolution &solution);
+    void solve();
     GapSolution getSolution();
     tuple<float, int, int, int> getBestRelocate();
 

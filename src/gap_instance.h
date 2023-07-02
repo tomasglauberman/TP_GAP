@@ -17,17 +17,18 @@ class GapInstance{
     //Me da la cantidad de vendedores
     int getN() const;
 
-    int getSupply(int store, int seller) const;
+    int getDemand(int store, int seller) const;
     int getCapacity(int store) const;
     float getCost(int store, int seller) const;
     float getDMax() const;
+    void summary() const;
 
     private:
     int _stores;
     int _sellers;
     // posicion ij representa la cant de 
     //unidades a utilizar en el deposito i por el vendedor j
-    vector<vector<int>> _supply;
+    vector<vector<int>> _demand;
     //Posicion i representa la capacidad del deposito i
     vector<int> _capacities;
     //posicion ij representa el costo de asignar el deposito i al vendedor j

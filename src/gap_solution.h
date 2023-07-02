@@ -16,18 +16,23 @@ class GapSolution{
     GapSolution();
     GapSolution(GapInstance &instance);
     ~GapSolution();
+
     void assign(int store, int seller);
     void unassign(int store, int seller);
+
     bool isSellerAssign(int seller) const;
     int getStoreAssigned(int seller) const;
+
     void outputSolution(string filename);
     //Falta hacer output solution
     void setTime(double time);
     double getTime() const;
+
     float getObjVal() const;
     int getRemainingCapacity(int store) const;
-    bool checkFeasibility(GapInstance &instance);
+    bool checkFeasibility(GapInstance &instance) const;
     int getNotAssigned() const;
+    
     friend std::ostream& operator<<(std::ostream& os, const GapSolution& solution);
 
     private:

@@ -7,15 +7,19 @@
 using namespace std;
 #include "gap_instance.h"
 #include "gap_solution.h"
+#include "greedy1.h"
+#include "greedy2.h"
 
 
 
 class LocalSearchSwap{
     public:
+    enum InitialSolution {RANDOM, GREEDY1, GREEDY2};
+
     LocalSearchSwap();
-    LocalSearchSwap(GapInstance &instance);
+    LocalSearchSwap(GapInstance instance, InitialSolution initialSolution);
     ~LocalSearchSwap();
-    void solve(GapSolution &solution);
+    void solve();
     tuple<int,int> getBestSwap();
     GapSolution getSolution();
 

@@ -11,7 +11,7 @@ using namespace std;
 class GreedySolver2{
     public:
     GreedySolver2();
-    GreedySolver2(GapInstance &instance);
+    GreedySolver2(GapInstance instance);
     ~GreedySolver2();
     void solve();
     GapSolution getSolution();

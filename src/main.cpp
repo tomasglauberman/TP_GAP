@@ -10,26 +10,36 @@
 
 
 int main(int argc, char** argv) {
-    std::string filename = "instances/gap/gap_a/a20200";
+    // std::string filename = "instances/gap/gap_a/a20200";
+    std::string filename = "instances/real/real_instance";
     std::cout << "Reading file " << filename << std::endl;
-    
     GapInstance instancia = GapInstance(filename);
-    GreedySolver2 greedySolver2 = GreedySolver2(instancia);
-    // GapSolution menos1 = GapSolution(instancia);
-    greedySolver2.solve();
-    GapSolution solucion = greedySolver2.getSolution();
-    std::cout<<"Metodo print: "<<solucion<<std::endl;
-     std::cout<<"Factbilidad greedy: "<<solucion.checkFeasibility(instancia)<<std::endl;
-    // LocalSearchRelocate localSearch = LocalSearchRelocate(instancia);
-    // localSearch.solve(solucion);
-    // GapSolution solRel = localSearch.getSolution();
-    // std::cout<<solRel.getObjVal()<<" "<<solRel.getTime()<<std::endl;
-    // std::cout << "Objetive value: " << localSearch.getSolution() << std::endl;
 
-    LocalSearchSwap lsSwap = LocalSearchSwap(instancia);
-    lsSwap.solve(solucion); 
-    std::cout<<lsSwap.getSolution()<< std::endl; 
-    std::cout<<"Factbilidad: "<<lsSwap.getSolution().checkFeasibility(instancia)<<std::endl;
+    GreedySolver1 greedySolver1 = GreedySolver1(instancia);    
+    greedySolver1.solve();
+    GapSolution solucion1 = greedySolver1.getSolution();
+    std::cout<< "GREEDY 1" << std::endl << solucion1;
+    std::cout<<"Factbilidad: " << solucion1.checkFeasibility(instancia)<<std::endl<< std::endl;
+
+
+    GreedySolver2 greedySolver2 = GreedySolver2(instancia);
+    greedySolver2.solve();
+    GapSolution solucion2 = greedySolver2.getSolution();
+    std::cout<< "GREEDY 2" << std::endl << solucion2;
+    std::cout<<"Factbilidad: " << solucion2.checkFeasibility(instancia)<<std::endl << std::endl;
+
+
+    LocalSearchRelocate lsRelocate = LocalSearchRelocate(instancia, LocalSearchRelocate::InitialSolution::RANDOM);
+    lsRelocate.solve();
+    GapSolution solucion3 = lsRelocate.getSolution();
+    std::cout<< "LS RELOCATE" << std::endl << solucion3;
+    std::cout<<"Factbilidad: " << solucion3.checkFeasibility(instancia)<<std::endl << std::endl;
+
+
+    LocalSearchSwap lsSwap = LocalSearchSwap(instancia, LocalSearchSwap::InitialSolution::GREEDY1);
+    lsSwap.solve(); 
+    std::cout<< "LS SWAP" << std::endl << lsSwap.getSolution(); 
+    std::cout<<"Factbilidad: " << lsSwap.getSolution().checkFeasibility(instancia)<<std::endl;
 
     return 0;
 }

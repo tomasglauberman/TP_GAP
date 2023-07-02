@@ -8,14 +8,17 @@ GapInstance :: GapInstance(string filename){
     char delim = ' ';
     string line;
     input_file >> line;
-    this->_stores = stoi(line);
+    // 1 deposito mas para la penalizcion por no asignar
+    this->_stores = stoi(line) + 1;
     input_file >> line;
     this->_sellers = stoi(line);
-    this->_supply = vector<vector<int>>(this->_stores, vector<int>(this->_sellers));
+    this->_demand = vector<vector<int>>(this->_stores, vector<int>(this->_sellers));
     this->_costs = vector<vector<float>>(this->_stores, vector<float>(this->_sellers));
     this->_capacities = vector<int>(this->_stores);
     this->_d_max = 0;
-    for( int i = 0; i<this->_stores; i++){
+
+    // Costos de asignacion 
+    for( int i = 0; i<this->_stores-1; i++){
         for (int j = 0; j < this->_sellers; j++)
         {
             input_file >> line;
@@ -24,22 +27,37 @@ GapInstance :: GapInstance(string filename){
                 this->_d_max = stof(line);
             }
         }
-        
     }
-    for( int i = 0; i<this->_stores; i++){
+
+    // Costos de penalizacion
+    for (int j = 0; j < this->_sellers; j++)
+    {
+        this->_costs[this->_stores-1][j] = this->_d_max;
+    }
+
+    // Demandas
+    for( int i = 0; i<this->_stores-1; i++){
         for (int j = 0; j < this->_sellers; j++)
         {
             input_file >> line;
-            this->_supply[i][j] = stof(line);
+            this->_demand[i][j] = stof(line);
         }
-        
     }
-    for (int i = 0; i < this->_stores; i++)
+
+    // Demandas de deposito 'fantasma'
+    // Siempre es 0, por lo que siempre se puede asignar a ese deposito
+    for (int j = 0; j < this->_sellers; j++)
+    {
+        this->_demand[this->_stores-1][j] = 0;
+    }
+
+    for (int i = 0; i < this->_stores-1; i++)
     {
         input_file >> line;
         this->_capacities[i] = stoi(line);
     }
-    //std::cout << this->_d_max<<std::endl;
+    this->_capacities[this->_stores-1] = 1;
+
 }
 
 GapInstance::~GapInstance(){}
@@ -47,12 +65,13 @@ GapInstance::~GapInstance(){}
 int GapInstance :: getM() const {
     return this->_stores;
 };
+
 int GapInstance :: getN() const{
     return this->_sellers;
 };
 
-int GapInstance::getSupply(int store, int seller) const{
-    return this->_supply[store][seller];
+int GapInstance::getDemand(int store, int seller) const{
+    return this->_demand[store][seller];
 }
 
 int GapInstance::getCapacity(int store) const{
@@ -65,6 +84,29 @@ float GapInstance::getCost(int store, int seller) const{
 
 float GapInstance::getDMax() const{
     return this->_d_max;
+}
+
+void GapInstance::summary() const {
+    int64_t capacidad_total = 0;
+    for (int i = 0; i < getM()-1; i++)
+    {
+        capacidad_total += getCapacity(i);
+    }
+
+    int64_t demanda_total = 0;
+    for (int j = 0; j < getN(); j++)
+    {
+        int demanda = 0;
+        for (int i = 0; i < getM()-1; i++)
+        {
+            demanda += getDemand(i,j);
+        }
+
+        demanda_total += (demanda/(getM()-1));
+    }
+
+    std::cout << "Capacidad total: " << capacidad_total << std::endl;
+    std::cout << "Demandas promedio total: " << demanda_total << std::endl;
 }
 
 
