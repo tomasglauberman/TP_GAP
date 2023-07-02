@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -std=c++17
 SRC = gap_instance.cpp gap_solution.cpp greedy1.cpp greedy2.cpp lsRelocate.cpp lsSwap.cpp main.cpp 
-OBJ = $(SRC:.cpp=.o)
+OBJ = $(patsubst %.cpp, build/%.o, $(SRC))
 EXEC = gap_simulator
 
 all: $(EXEC)
@@ -9,7 +9,7 @@ all: $(EXEC)
 $(EXEC): $(OBJ)
 	$(CC) $(OBJ) -o $(EXEC)
 
-%.o: %.cpp
+build/%.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
