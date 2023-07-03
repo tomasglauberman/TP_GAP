@@ -29,7 +29,7 @@ void GapSolution::assign(int store, int seller) {
     this->_sellers_assignment[seller] = store;
     this->_remaining_capacity[store] -= this->_instance.getDemand(store,seller);
 
-    // Es necesrio aca??
+    // Es necesrio aca?? SI
     this->_not_assigned --;
     this->_obj_value =  this->_obj_value - 3* this->_instance.getDMax() + this->_instance.getCost(store, seller);
 }
@@ -45,7 +45,7 @@ void GapSolution::unassign(int store, int seller) {
     this->_sellers_assignment[seller] = this->_instance.getM()-1;
     this->_remaining_capacity[store] += this->_instance.getDemand(store,seller);
 
-    // Es necesrio aca??
+    // Es necesrio aca?? SI
     this->_not_assigned++;
     this->_obj_value =  this->_obj_value + 3 * this->_instance.getDMax() - this->_instance.getCost(store, seller);
 }
@@ -103,8 +103,15 @@ std::ostream& operator<<(std::ostream& os, const GapSolution& solution) {
     return os;
 }
 
+// Tanto getObjVal2 como getNotAssigned2 son O(1) y funcionan bien
+//Las probe para 5 instancias distintas y devuelven lo mismo que las originales
+
 float GapSolution::getObjVal2() const{
     return this->_obj_value;
+}
+
+int GapSolution::getNotAssigned2() const{
+    return this->_not_assigned;
 }
 
 bool GapSolution::checkFeasibility(GapInstance &instance) const {

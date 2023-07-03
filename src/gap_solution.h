@@ -35,6 +35,7 @@ class GapSolution{
 
     static GapSolution randomSolution(GapInstance instance, int seed=0);
     float getObjVal2() const;
+    int getNotAssigned2() const;
     friend std::ostream& operator<<(std::ostream& os, const GapSolution& solution);
 
     private:
