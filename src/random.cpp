@@ -13,7 +13,8 @@ Random::~Random(){}
 void Random::solve(){
 
     auto start = std::chrono::high_resolution_clock::now();
-
+    //VER TEMA DE SEMILLA. SI NO PONGO HAY CASOS EN LOS QUE EL RELOCATE EMPEORA LA SOLUCION. RARO!!
+    srand(1);
     for (int j = 0; j < this->_instance.getN(); j++)
     {
         //En pero caso hago 20 busquedas random de store para cada vendedor

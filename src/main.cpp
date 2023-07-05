@@ -71,10 +71,10 @@ int main(int argc, char** argv) {
 
     }
     
-    //std::string filename = "instances/gap/gap_a/a20200";
+    //std::string filename = "instances/gap/gap_b/b20200";
     // std::string filename = "instances/real/real_instance";
     // std::cout << "Reading file " << filename << std::endl;
-    // GapInstance instancia = GapInstance(filename);
+    //GapInstance instancia = GapInstance(filename);
 
     // GreedySolver1 greedySolver1 = GreedySolver1(instancia);    
     // greedySolver1.solve();
