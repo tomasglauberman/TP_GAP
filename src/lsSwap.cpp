@@ -27,6 +27,7 @@ LocalSearchSwap::LocalSearchSwap(GapInstance instance, InitialSolution initialSo
         greedySolver2.solve();
         this->_solution = greedySolver2.getSolution();
     }
+
 }
 
 void LocalSearchSwap::solve(){
@@ -108,47 +109,6 @@ GapSolution LocalSearchSwap::getSolution(){
     return this->_solution;
 }
 
-
-// void something(){
-//        for(int i = 0; i < this->_instance.getN();i++){
-//         int store_i = this->_solution.getStoreAssigned(i);
-//         for (int j = i ;  j <  this->_instance.getN(); j++){
-//             int store_j = this->_solution.getStoreAssigned(j);
-//             if(store_i!=-1 && store_j!=-1){
-//                 float costo_inicial =  this->_instance.getCost(store_i, i)+ this->_instance.getCost(store_j,j);
-//                 float costo_swap = this->_instance.getCost(store_i, j)+ this->_instance.getCost(store_j,i);
-//                 int cap_rem_store_i = this->_solution.getRemainingCapacity(store_i) + this->_instance.getDemand(store_i, i) - this->_instance.getDemand(store_i,j);
-//                 int cap_rem_store_j = this->_solution.getRemainingCapacity(store_j) + this->_instance.getDemand(store_j, j) - this->_instance.getDemand(store_j,i);
-//                 if(costo_swap < costo_inicial && cap_rem_store_i >=0 && cap_rem_store_j>=0){
-//                     if(costo_swap - costo_inicial < mejora){
-//                         mejora = costo_swap - costo_inicial;
-//                         vr = std::make_tuple(i,j);
-//                     }
-//                 }
-//             }
-//             else if( store_i == -1 && store_j !=-1){
-//                 float costo_inicial =  this->_instance.getDMax()*3+ this->_instance.getCost(store_j,j);
-//                 float costo_swap = this->_instance.getDMax()*3+ this->_instance.getCost(store_j,i);
-//                 int cap_rem_store_j = this->_solution.getRemainingCapacity(store_j) + this->_instance.getDemand(store_j, j) - this->_instance.getDemand(store_j,i);
-//                 if(costo_swap < costo_inicial  && cap_rem_store_j>=0){
-//                     if(costo_swap - costo_inicial < mejora){
-//                         mejora = costo_swap - costo_inicial;
-//                         vr = std::make_tuple(i,j);
-//                     }
-//                 }
-//             }
-//             else if(store_i != -1 && store_j == -1){
-//                 float costo_inicial =  this->_instance.getCost(store_i, i)+ this->_instance.getDMax()*3;
-//                 float costo_swap = this->_instance.getCost(store_i, j)+ this->_instance.getDMax()*3;
-//                 int cap_rem_store_i = this->_solution.getRemainingCapacity(store_i) + this->_instance.getDemand(store_i, i) - this->_instance.getDemand(store_i,j);
-//                 if(costo_swap < costo_inicial && cap_rem_store_i >=0){
-//                     if(costo_swap - costo_inicial < mejora){
-//                         mejora = costo_swap - costo_inicial;
-//                         vr = std::make_tuple(i,j);
-//                     }
-//                 }
-//             }
-
-//         }
-//     }
-// }
+void LocalSearchSwap::setSolution(GapSolution solution){
+    this->_solution = solution;
+}

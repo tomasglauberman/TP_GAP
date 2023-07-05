@@ -9,6 +9,7 @@
 #include "lsSwap.h"
 #include "genAlg.h"
 #include "random.h"
+#include "vnd.h"
 #include <filesystem>
 
 vector<string> archivos = {};
@@ -71,7 +72,7 @@ int main(int argc, char** argv) {
 
     // }
     
-    std::string filename = "instances/gap/gap_b/b20200";
+    std::string filename = "instances/real/real_instance";
     // std::string filename = "instances/real/real_instance";
     // std::cout << "Reading file " << filename << std::endl;
     GapInstance instancia = GapInstance(filename);
@@ -102,13 +103,11 @@ int main(int argc, char** argv) {
     // std::cout<< "LS SWAP" << std::endl << solucion4; 
     // std::cout<<"Factbilidad: " << solucion4.checkFeasibility(instancia)<<std::endl;
     
-    Random random = Random(instancia);
-    random.solve();
-    GapSolution solucion5 = random.getSolution();
-    std::cout<< "Random" << std::endl<< solucion5;
-    std::cout<<"Factbilidad: " << solucion5.checkFeasibility(instancia)<<std::endl;
-
-
+    // Random random = Random(instancia);
+    // random.solve();
+    // GapSolution solucion5 = random.getSolution();
+    // std::cout<< "Random" << std::endl<< solucion5;
+    // std::cout<<"Factbilidad: " << solucion5.checkFeasibility(instancia)<<std::endl;
 
     // LocalSearchSwap lsSwap1 = LocalSearchSwap(instancia, LocalSearchSwap::InitialSolution::RANDOM);
     // lsSwap1.solve(); 
@@ -117,11 +116,18 @@ int main(int argc, char** argv) {
     // std::cout<<"Factbilidad: " << solucion6.checkFeasibility(instancia)<<std::endl;
 
 
-
     LocalSearchRelocate lsRelocate1 = LocalSearchRelocate(instancia, LocalSearchRelocate::InitialSolution::RANDOM);
     lsRelocate1.solve();
     GapSolution solucion7 = lsRelocate1.getSolution();
     std::cout<< "LS RELOCATE" << std::endl << solucion7;
     std::cout<<"Factbilidad: " << solucion7.checkFeasibility(instancia)<<std::endl;
+
+    VND vnd = VND(instancia, VND::InitialSolution::RANDOM, VND::FirstNeighborhood::SWAP);
+    vnd.solve();
+    GapSolution solucionVnd = vnd.getSolution();
+    std::cout<< "VND" << std::endl << solucionVnd;
+    std::cout<<"Factbilidad: " << solucionVnd.checkFeasibility(instancia)<<std::endl;
+
+
     return 0;
 }

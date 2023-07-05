@@ -1,5 +1,5 @@
-#ifndef LS_RELOCATE_H
-#define LS_RELOCATE_H
+#ifndef VND_H
+#define VND_H
 
 #include<vector>
 #include<string>
@@ -10,24 +10,29 @@ using namespace std;
 #include "greedy1.h"
 #include "greedy2.h"
 #include "random.h"
+#include "lsSwap.h"
+#include "lsRelocate.h"
 #include <tuple>
 
-class LocalSearchRelocate{
+class VND{
     public:
     enum InitialSolution {GREEDY1, GREEDY2, RANDOM, CUSTOM};
+    enum FirstNeighborhood {RELOCATE, SWAP};
 
-    LocalSearchRelocate();
-    LocalSearchRelocate(GapInstance instance, InitialSolution initialSolution, GapSolution solution=GapSolution());
-    ~LocalSearchRelocate();
+    VND();
+    VND(GapInstance instance, InitialSolution initialSolution, FirstNeighborhood firstNeighborhood);
+    ~VND();
     void solve();
     GapSolution getSolution();
-    void setSolution(GapSolution solution);
     tuple<float, int, int, int> getBestRelocate();
 
 
     private:
     GapInstance _instance;
     GapSolution _solution;
+    FirstNeighborhood _firstNeighborhood;
 };
+
+
 
 #endif

@@ -15,13 +15,14 @@ using namespace std;
 
 class LocalSearchSwap{
     public:
-    enum InitialSolution {RANDOM, GREEDY1, GREEDY2};
+    enum InitialSolution {RANDOM, GREEDY1, GREEDY2, CUSTOM};
 
     LocalSearchSwap();
     LocalSearchSwap(GapInstance instance, InitialSolution initialSolution);
     ~LocalSearchSwap();
     void solve();
     tuple<int,int> getBestSwap();
+    void setSolution(GapSolution solution);
     GapSolution getSolution();
 
     

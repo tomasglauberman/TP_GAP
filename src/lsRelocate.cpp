@@ -4,7 +4,7 @@
 
 LocalSearchRelocate::LocalSearchRelocate(){}
 
-LocalSearchRelocate :: LocalSearchRelocate(GapInstance instance, InitialSolution initialSolution){
+LocalSearchRelocate :: LocalSearchRelocate(GapInstance instance, InitialSolution initialSolution, GapSolution solution){
     this->_instance = instance;
 
     if(initialSolution == InitialSolution::GREEDY1) {
@@ -21,6 +21,8 @@ LocalSearchRelocate :: LocalSearchRelocate(GapInstance instance, InitialSolution
         Random random = Random(instance);
         random.solve();
         this->_solution = random.getSolution();
+    } else if (initialSolution == InitialSolution::CUSTOM) {
+        this->_solution = solution;
     }
 
 };
@@ -95,3 +97,6 @@ tuple<float, int, int, int> LocalSearchRelocate::getBestRelocate() {
     return vr;
 }
 
+void LocalSearchRelocate::setSolution(GapSolution solution){
+    this->_solution = solution;
+}
