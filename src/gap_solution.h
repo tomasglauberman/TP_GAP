@@ -28,14 +28,14 @@ class GapSolution{
     void setTime(double time);
     double getTime() const;
 
-    float getObjVal() const;
+    //float getObjVal_aux() const;
     int getRemainingCapacity(int store) const;
     bool checkFeasibility(GapInstance &instance) const;
-    int getNotAssigned() const;
+    //int getNotAssigned_aux() const;
 
     static GapSolution randomSolution(GapInstance instance, int seed=0);
-    float getObjVal2() const;
-    int getNotAssigned2() const;
+    float getObjVal() const;
+    int getNotAssigned() const;
     friend std::ostream& operator<<(std::ostream& os, const GapSolution& solution);
 
     private:

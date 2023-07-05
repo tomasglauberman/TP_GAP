@@ -10,7 +10,9 @@ LocalSearchSwap::~LocalSearchSwap(){}
 LocalSearchSwap::LocalSearchSwap(GapInstance instance, InitialSolution initialSolution){
     this->_instance = instance;
     if (initialSolution == InitialSolution::RANDOM){
-        this->_solution = GapSolution(instance);
+        Random random = Random(instance);
+        random.solve();
+        this->_solution = random.getSolution();
     }
     else if (initialSolution == InitialSolution::GREEDY1){
         GreedySolver1 greedySolver1 = GreedySolver1(instance);    
@@ -25,7 +27,7 @@ LocalSearchSwap::LocalSearchSwap(GapInstance instance, InitialSolution initialSo
 }
 
 void LocalSearchSwap::solve(){
-
+    auto start = std::chrono::high_resolution_clock::now();
     bool search = true;
     while(search){
         tuple<int, int> vr = getBestSwap();
@@ -62,6 +64,9 @@ void LocalSearchSwap::solve(){
         }
        
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    int64_t duration = std::chrono::duration_cast<std::chrono::microseconds>(end -start).count();
+    this->_solution.setTime(double(duration));
 }
 
 
