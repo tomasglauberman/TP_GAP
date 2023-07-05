@@ -3,6 +3,9 @@
 #include <chrono>
 
 
+//Heuristica random pero factible, la usamos como solucion incial
+//para ver la mejora de los operadores de busqueda local
+
 LocalSearchSwap::LocalSearchSwap(){}
 
 LocalSearchSwap::~LocalSearchSwap(){}
