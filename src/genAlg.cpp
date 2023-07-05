@@ -14,7 +14,15 @@ GeneticAlgorithmSolver::GeneticAlgorithmSolver(GapInstance instance, int populat
 
     // Randomly generate initial population
     for (int i = 0; i < populationSize; i++) {
-        this->_population[i] = GapSolution::randomSolution(instance);
+        GreedySolver1 greedy1 = GreedySolver1(instance);
+
+        if(rand() % populationSize/20 == 0) {
+            greedy1.solve();
+            this->_population[i] = greedy1.getSolution();
+        } else {
+            this->_population[i] = GapSolution::randomSolution(instance);
+        }
+
         this->_fitness[i] = this->_population[i].getObjVal();
         this->_unfitness[i] = this->_unfitnessFunction(this->_population[i]);
     }
