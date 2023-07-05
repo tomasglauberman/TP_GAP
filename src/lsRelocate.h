@@ -9,6 +9,7 @@ using namespace std;
 #include "gap_solution.h"
 #include "greedy1.h"
 #include "greedy2.h"
+#include "random.h"
 #include <tuple>
 
 class LocalSearchRelocate{

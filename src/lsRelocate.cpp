@@ -18,7 +18,9 @@ LocalSearchRelocate :: LocalSearchRelocate(GapInstance instance, InitialSolution
         this->_solution = greedySolver2.getSolution();
     } 
     else if(initialSolution == InitialSolution::RANDOM) {
-        this->_solution = GapSolution(instance);
+        Random random = Random(instance);
+        random.solve();
+        this->_solution = random.getSolution();
     }
 
 };
@@ -26,7 +28,7 @@ LocalSearchRelocate :: LocalSearchRelocate(GapInstance instance, InitialSolution
 LocalSearchRelocate::~LocalSearchRelocate(){}
 
 void LocalSearchRelocate::solve(){
-    
+    auto start = std::chrono::high_resolution_clock::now();
     bool search = true;
 
     while(search) {
@@ -50,7 +52,6 @@ void LocalSearchRelocate::solve(){
 
     }
 
-    auto start = std::chrono::high_resolution_clock::now();
 
     auto end = std::chrono::high_resolution_clock::now();
     int64_t duration = std::chrono::duration_cast<std::chrono::microseconds>(end -start).count();
