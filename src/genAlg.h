@@ -3,6 +3,7 @@
 
 #include "gap_instance.h"
 #include "gap_solution.h"
+#include "greedy1.h"
 #include <vector>
 
 
