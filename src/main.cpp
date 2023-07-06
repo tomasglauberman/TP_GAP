@@ -119,17 +119,17 @@ int main(int argc, char** argv) {
     // std::cout<< "LS RELOCATE" << std::endl << solucion7;
     // std::cout<<"Factbilidad: " << solucion7.checkFeasibility(instancia)<<std::endl;
 
-    // VND vnd = VND(instancia, VND::InitialSolution::RANDOM, VND::FirstNeighborhood::SWAP);
-    // vnd.solve();
-    // GapSolution solucionVnd = vnd.getSolution();
-    // std::cout<< "VND" << std::endl << solucionVnd;
-    // std::cout<<"Factbilidad: " << solucionVnd.checkFeasibility(instancia)<<std::endl;
+    VND vnd = VND(instancia, VND::InitialSolution::GENETIC, VND::FirstNeighborhood::RELOCATE);
+    vnd.solve();
+    GapSolution solucionVnd = vnd.getSolution();
+    std::cout<< "VND" << std::endl << solucionVnd;
+    std::cout<<"Factbilidad: " << solucionVnd.checkFeasibility(instancia)<<std::endl;
 
-    GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instancia, 100, 100);
-    genetic.solve();
-    GapSolution solucionGenetic = genetic.getSolution();
-    std::cout<< std::endl <<"GENETIC" << std::endl << solucionGenetic;
-    std::cout<<"Factbilidad: " << solucionGenetic.checkFeasibility(instancia)<<std::endl;
+    // GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instancia, 100, 100);
+    // genetic.solve();
+    // GapSolution solucionGenetic = genetic.getSolution();
+    // std::cout<< std::endl <<"GENETIC" << std::endl << solucionGenetic;
+    // std::cout<<"Factbilidad: " << solucionGenetic.checkFeasibility(instancia)<<std::endl;
 
     return 0;
 }

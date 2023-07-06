@@ -67,10 +67,10 @@ void GeneticAlgorithmSolver::solve() {
             bestSolution = this->_population[p];
         }
     }
+    this->_solution = bestSolution;
     auto end = std::chrono::high_resolution_clock::now();
     int64_t duration = std::chrono::duration_cast<std::chrono::microseconds>(end -start).count();
     this->_solution.setTime(double(duration));
-    this->_solution = bestSolution;
 
 };
 

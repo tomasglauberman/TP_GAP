@@ -12,11 +12,12 @@ using namespace std;
 #include "random.h"
 #include "lsSwap.h"
 #include "lsRelocate.h"
+#include "genAlg.h"
 #include <tuple>
 
 class VND{
     public:
-    enum InitialSolution {GREEDY1, GREEDY2, RANDOM, CUSTOM};
+    enum InitialSolution {GREEDY1, GREEDY2, RANDOM, CUSTOM, GENETIC};
     enum FirstNeighborhood {RELOCATE, SWAP};
 
     VND();
