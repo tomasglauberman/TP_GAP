@@ -164,3 +164,26 @@ GapSolution GapSolution::randomSolution(GapInstance instance, int seed) {
     }
     return solution;
 }
+
+void GapSolution::outputSolution(string filename) {
+    // Abrir el archivo en modo escritura
+    std::ofstream archivo(filename);
+
+    // Verificar si el archivo se abrió correctamente
+    if (!archivo) {
+        std::cerr << "No se pudo abrir el archivo " << filename << std::endl;
+    }
+
+    // Escribir en el archivo
+    for (int i=0; i < this->_instance.getM()-1; i++) {
+        for (int j=0; j < this->_instance.getN(); j++) {
+            if (this->_sellers_assignment[j] == i) {
+                archivo << j << " ";
+            }
+        }
+        archivo << std::endl;  // Nueva línea para cada depósito
+    }
+
+    // Cerrar el archivo
+    archivo.close();
+}

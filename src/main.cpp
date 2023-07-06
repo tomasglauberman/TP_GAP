@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <ostream>
+#include <unordered_map>
 #include "gap_instance.h"
 #include "gap_solution.h"
 #include "greedy1.h"
@@ -12,124 +13,174 @@
 #include "vnd.h"
 #include <filesystem>
 
-vector<string> archivos = {};
-vector<string> processFiles(const std::string& folderPath) {
-    for (const auto& entry : std::filesystem::directory_iterator(folderPath)) {
-        if (std::filesystem::is_directory(entry)) {
-            // Si es un directorio, llamamos recursivamente a la función para procesar los archivos dentro de él
-            processFiles(entry.path().string());
-        } else if (std::filesystem::is_regular_file(entry) && entry.path().extension() != ".json" && entry.path().extension() != ".ipynb") {
-            // Si es un archivo regular, lo procesamos
-            //Por algun motivo no me estaba excluyendo los ds_store
-            if(!(entry.path().string() == "instances/.DS_Store") && !(entry.path().string() == "instances/gap/.DS_Store")){
-                archivos.push_back(entry.path());
-                //std::cout<< entry.path() << std::endl;
-            }
-        }
+enum Algorithm {GREEDY1, GREEDY2, LS_RELOCATE, LS_SWAP, VND_S, VND_R, GENETIC};
+
+int main(int argc, char* argv[]) {
+
+    std::string filename = argv[1];
+    std::string outputFile = argv[2];
+    
+
+    if(filename == "real_instance") {
+        filename = "instances/real/real_instance";
+    } else {
+        char type = argv[1][0];
+        filename = "instances/gap/gap_";
+        filename += type;
+        filename += "/";
+        filename += argv[1];
     }
-    return archivos;
-}
 
-int main(int argc, char** argv) {
-    // std::string folderPath = "instances";
+    std::unordered_map<std::string, Algorithm> enumMap = {
+        {"GREEDY1", GREEDY1},
+        {"GREEDY2", GREEDY2},
+        {"LS_RELOCATE", LS_RELOCATE},
+        {"LS_SWAP", LS_SWAP},
+        {"VND_S", VND_S},
+        {"VND_R", VND_R},
+        {"GENETIC", GENETIC}
+    };
 
-    // vector<string> files = processFiles(folderPath);
-    
-    // std::fstream file;
-    
-    // // Open file and write header
-    // file.open ("results.csv");
-    // file << "filename, tipo, stores, selles, greedy1_cost, greedy2_cost, random_cost, relocate(random)_cost, swap(greedy2)_cost, genetic_cost, vnd_cost, g1_time, g2_time, rand_time, rel_time, swap_time, gen_time, vnd_time"<< std::endl; 
+    if (argc < 3) {
+        std::cout << "No se especifico algoritmo. Uso: ./program <algoritmo>" << std::endl;
+        return 0;
+    }
 
-    // for(int i = 0; i < files.size(); i++){
-    //     std::string filename = files[i];
-    //     //Creo intancia
-    //     GapInstance instance = GapInstance(filename);
-        
-    //     GreedySolver1 greedySolver1 = GreedySolver1(instance);
-    //     GreedySolver2 greedySolver2 = GreedySolver2(instance);
-    //     Random random = Random(instance);
-    //     LocalSearchRelocate lsRelocate = LocalSearchRelocate(instance, LocalSearchRelocate::InitialSolution::RANDOM);
-    //     LocalSearchSwap lsSwap = LocalSearchSwap(instance,LocalSearchSwap::InitialSolution::GREEDY2);
-
-    //     greedySolver1.solve();
-    //     greedySolver2.solve();
-    //     random.solve();
-    //     lsRelocate.solve();
-    //     lsSwap.solve();
-
-    //     GapSolution greedy1_sol = greedySolver1.getSolution();
-    //     GapSolution greedy2_sol = greedySolver2.getSolution();
-    //     GapSolution random_sol = random.getSolution();
-    //     GapSolution relocate_sol = lsRelocate.getSolution();
-    //     GapSolution swap_sol = lsSwap.getSolution();
-    //     file << filename << "," << filename << "," << instance.getM()-1 << "," << instance.getN() << 
-    //     "," << greedy1_sol.getObjVal() << "," << greedy2_sol.getObjVal() << "," << random_sol.getObjVal()
-    //     << "," << relocate_sol.getObjVal()<< "," << swap_sol.getObjVal()<<","<<"gen_cost"<<","<<
-    //     "vnd_cost"<< "," <<greedy1_sol.getTime() << "," << greedy2_sol.getTime() << "," << 
-    //     random_sol.getTime()<< "," << relocate_sol.getTime()<< "," << swap_sol.getTime()
-    //     <<","<<"gen_time"<<","<<"vnd_time"<< std::endl;
-
-    // }
-    
-    // std::string filename = "instances/gap/gap_a/a05100";
-    std::string filename = "instances/real/real_instance";
-    // std::cout << "Reading file " << filename << std::endl;
+    std::cout << "Reading file " << filename << std::endl;
     GapInstance instancia = GapInstance(filename);
+    std::string enumName = argv[3];
+    if (enumMap.find(enumName) == enumMap.end()) {
+        std::cout << "Algoritmo incorrecto: " << enumName << std::endl;
+        return 0;
+    }
 
-    // GreedySolver1 greedySolver1 = GreedySolver1(instancia);    
-    // greedySolver1.solve();
-    // GapSolution solucion1 = greedySolver1.getSolution();
-    // std::cout<< "GREEDY 1" << std::endl << solucion1;
-    // std::cout<<"Factbilidad: " << solucion1.checkFeasibility(instancia)<<std::endl;
-     
-    // GreedySolver2 greedySolver2 = GreedySolver2(instancia);
-    // greedySolver2.solve();
-    // GapSolution solucion2 = greedySolver2.getSolution();
-    // std::cout<< "GREEDY 2" << std::endl << solucion2;
-    // std::cout<<"Factbilidad: " << solucion2.checkFeasibility(instancia)<<std::endl;
-   
-    // LocalSearchRelocate lsRelocate = LocalSearchRelocate(instancia, LocalSearchRelocate::InitialSolution::RANDOM);
-    // lsRelocate.solve();
-    // GapSolution solucion3 = lsRelocate.getSolution();
-    // std::cout<< "LS RELOCATE" << std::endl << solucion3;
-    // std::cout<<"Factbilidad: " << solucion3.checkFeasibility(instancia)<<std::endl;
+    Algorithm enumValue = enumMap[enumName];
 
-    // LocalSearchSwap lsSwap = LocalSearchSwap(instancia, LocalSearchSwap::InitialSolution::GREEDY2);
-    // lsSwap.solve(); 
-    // GapSolution solucion4 = lsSwap.getSolution();
-    // std::cout<< "LS SWAP" << std::endl << solucion4; 
-    // std::cout<<"Factbilidad: " << solucion4.checkFeasibility(instancia)<<std::endl;
-    
-    // Random random = Random(instancia);
-    // random.solve();
-    // GapSolution solucion5 = random.getSolution();
-    // std::cout<< "Random" << std::endl<< solucion5;
-    // std::cout<<"Factbilidad: " << solucion5.checkFeasibility(instancia)<<std::endl;
+    // Example usage
+    switch (enumValue) {
+        case GREEDY1: {
+            GreedySolver1 greedySolver1 = GreedySolver1(instancia);    
+            greedySolver1.solve();
+            GapSolution solucion = greedySolver1.getSolution();
+            solucion.outputSolution(outputFile);
+            std::cout<< "GREEDY 1" << std::endl << solucion;
+            std::cout<<"Factbilidad: " << solucion.checkFeasibility(instancia)<<std::endl;
+            break;
+        }
+        case GREEDY2: {
+            GreedySolver2 greedySolver2 = GreedySolver2(instancia);
+            greedySolver2.solve();
+            GapSolution solucion = greedySolver2.getSolution();
+            solucion.outputSolution(outputFile);
+            std::cout<< "GREEDY 2" << std::endl << solucion;
+            std::cout<<"Factbilidad: " << solucion.checkFeasibility(instancia)<<std::endl;
+            break;
+        }
+        case LS_RELOCATE: {
+            LocalSearchRelocate::InitialSolution initialSolution;
+            std::string intSol = argv[4];
+            if (intSol == "RANDOM") {
+                initialSolution = LocalSearchRelocate::InitialSolution::RANDOM;
+            } else if (intSol == "GREEDY1") {
+                initialSolution = LocalSearchRelocate::InitialSolution::GREEDY1;
+            } else if (intSol == "GREEDY2") {
+                initialSolution = LocalSearchRelocate::InitialSolution::GREEDY2;
+            } else {
+                std::cout << "Solucion inicial incorrecta: " << argv[3] << std::endl;
+                return 0;
+            }
+            LocalSearchRelocate lsRelocate = LocalSearchRelocate(instancia, initialSolution);
+            lsRelocate.solve();
+            GapSolution solucion = lsRelocate.getSolution();
+            solucion.outputSolution(outputFile);
+            std::cout<< "LS RELOCATE" << std::endl << solucion;
+            std::cout<<"Factbilidad: " << solucion.checkFeasibility(instancia)<<std::endl;
+            break;
+        }
+        case LS_SWAP: {
+            LocalSearchSwap::InitialSolution initialSolution;
+            std::string intSol = argv[4];
+            if (intSol == "RANDOM") {
+                initialSolution = LocalSearchSwap::InitialSolution::RANDOM;
+            } else if (intSol == "GREEDY1") {
+                initialSolution = LocalSearchSwap::InitialSolution::GREEDY1;
+            } else if (intSol == "GREEDY2") {
+                initialSolution = LocalSearchSwap::InitialSolution::GREEDY2;
+            } else {
+                std::cout << "Solucion inicial incorrecta: " << argv[3] << std::endl;
+                return 0;
+            }
+            LocalSearchSwap lsRelocate = LocalSearchSwap(instancia, initialSolution);
+            lsRelocate.solve();
+            GapSolution solucion = lsRelocate.getSolution();
+            solucion.outputSolution(outputFile);
+            std::cout<< "LS SWAP" << std::endl << solucion;
+            std::cout<<"Factbilidad: " << solucion.checkFeasibility(instancia)<<std::endl;
+            break;
+        }
+        case VND_S: {
+            VND::InitialSolution initialSolutionVnd;
+            std::string intSol = argv[4];
+            if (intSol == "RANDOM") {
+                initialSolutionVnd = VND::InitialSolution::RANDOM;
+            } else if (intSol == "GREEDY1") {
+                initialSolutionVnd = VND::InitialSolution::GREEDY1;
+            } else if (intSol == "GREEDY2") {
+                initialSolutionVnd = VND::InitialSolution::GREEDY2;
+            } else if (intSol == "GENETIC") {
+                initialSolutionVnd = VND::InitialSolution::GENETIC;
+            } else {
+                std::cout << "Solucion inicial incorrecta: " << argv[3] << std::endl;
+                return 0;
+            }
+            VND vnd = VND(instancia, initialSolutionVnd, VND::FirstNeighborhood::SWAP);
+            vnd.solve();
+            GapSolution solucionVnd = vnd.getSolution();
+            solucionVnd.outputSolution(outputFile);
+            std::cout<< "VND" << std::endl << solucionVnd;
+            std::cout<<"Factbilidad: " << solucionVnd.checkFeasibility(instancia)<<std::endl;
+            break;
+        }
 
-    // LocalSearchSwap lsSwap1 = LocalSearchSwap(instancia, LocalSearchSwap::InitialSolution::RANDOM);
-    // lsSwap1.solve(); 
-    // GapSolution solucion6 = lsSwap1.getSolution();
-    // std::cout<< "LS SWAP" << std::endl << solucion6;
-    // std::cout<<"Factbilidad: " << solucion6.checkFeasibility(instancia)<<std::endl;
+        case VND_R: {
+            VND::InitialSolution initialSolutionVnd;
+            std::string intSol = argv[4];
+            if (intSol == "RANDOM") {
+                initialSolutionVnd = VND::InitialSolution::RANDOM;
+            } else if (intSol == "GREEDY1") {
+                initialSolutionVnd = VND::InitialSolution::GREEDY1;
+            } else if (intSol == "GREEDY2") {
+                initialSolutionVnd = VND::InitialSolution::GREEDY2;
+            } else if (intSol == "GENETIC") {
+                initialSolutionVnd = VND::InitialSolution::GENETIC;
+            } else {
+                std::cout << "Solucion inicial incorrecta: " << argv[3] << std::endl;
+                return 0;
+            }
+            VND vnd = VND(instancia, initialSolutionVnd, VND::FirstNeighborhood::RELOCATE);
+            vnd.solve();
+            GapSolution solucionVnd = vnd.getSolution();
+            solucionVnd.outputSolution(outputFile);
+            std::cout<< "VND" << std::endl << solucionVnd;
+            std::cout<<"Factbilidad: " << solucionVnd.checkFeasibility(instancia)<<std::endl;
+            break;
+        }
 
-    // LocalSearchRelocate lsRelocate1 = LocalSearchRelocate(instancia, LocalSearchRelocate::InitialSolution::RANDOM);
-    // lsRelocate1.solve();
-    // GapSolution solucion7 = lsRelocate1.getSolution();
-    // std::cout<< "LS RELOCATE" << std::endl << solucion7;
-    // std::cout<<"Factbilidad: " << solucion7.checkFeasibility(instancia)<<std::endl;
-
-    VND vnd = VND(instancia, VND::InitialSolution::GENETIC, VND::FirstNeighborhood::RELOCATE);
-    vnd.solve();
-    GapSolution solucionVnd = vnd.getSolution();
-    std::cout<< "VND" << std::endl << solucionVnd;
-    std::cout<<"Factbilidad: " << solucionVnd.checkFeasibility(instancia)<<std::endl;
-
-    // GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instancia, 100, 100);
-    // genetic.solve();
-    // GapSolution solucionGenetic = genetic.getSolution();
-    // std::cout<< std::endl <<"GENETIC" << std::endl << solucionGenetic;
-    // std::cout<<"Factbilidad: " << solucionGenetic.checkFeasibility(instancia)<<std::endl;
+        case GENETIC: {
+            int populationSize = atoi(argv[4]);
+            int generations = atoi(argv[5]);
+            GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instancia, populationSize, generations);
+            genetic.solve();
+            GapSolution solucionGenetic = genetic.getSolution();
+            solucionGenetic.outputSolution("results");
+            std::cout<< "GENETIC" << std::endl << solucionGenetic;
+            std::cout<<"Factbilidad: " << solucionGenetic.checkFeasibility(instancia)<<std::endl;
+            break;
+        }
+        default:
+            std::cout << "ALGORITMO INCORRECTO" << std::endl;
+            break;
+    }
 
     return 0;
 }

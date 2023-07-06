@@ -24,10 +24,12 @@ VND::VND(GapInstance instance, InitialSolution initialSolution, FirstNeighborhoo
         this->_solution = random.getSolution();
     }   
     else if(initialSolution == InitialSolution::GENETIC) {
-        GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instance, 100, 100);
+        GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instance, 100, 1000);
         genetic.solve();
         this->_solution = genetic.getSolution();
     } 
+
+    std::srand(15);
 
 };
 
@@ -77,7 +79,7 @@ void VND::solve() {
 
     auto end = std::chrono::high_resolution_clock::now();
     int64_t duration = std::chrono::duration_cast<std::chrono::microseconds>(end -start).count();
-    this->_solution.setTime(double(duration));
+    this->_solution.setTime(this->_solution.getTime() + double(duration));
 
 
 }

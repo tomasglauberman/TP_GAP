@@ -24,7 +24,7 @@ class GapSolution{
     int getStoreAssigned(int seller) const;
 
     void outputSolution(string filename);
-    //Falta hacer output solution
+
     void setTime(double time);
     double getTime() const;
 
