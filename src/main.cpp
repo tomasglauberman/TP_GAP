@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
     
     // // Open file and write header
     // file.open ("results.csv");
-    // file << "filename, tipo, stores, selles, greedy1_cost, greedy2_cost, random_cost, relocate(random)_cost, swap(greedy2)_cost, genetic_cost, vnd_cost, g1_time, g2_time, rand_time, rel_time, swap_time, gen_time, vnd_time"<< std::endl; 
+    // file << "filename, tipo, stores, selles, greedy1_cost, greedy2_cost, random_cost, relocate(random)_cost, swap(greedy1)_cost, swap(greedy2)_cost, swap(random)_cost, vnd(greedy2)_cost,vnd(random)_cost, g1_time, g2_time, rand_time, rel_time, swap_G1_time, swap_G2_time, swap_rand_time gen_time, vnd_time"<< std::endl; 
 
     // for(int i = 0; i < files.size(); i++){
     //     std::string filename = files[i];
@@ -50,25 +50,40 @@ int main(int argc, char** argv) {
     //     GreedySolver2 greedySolver2 = GreedySolver2(instance);
     //     Random random = Random(instance);
     //     LocalSearchRelocate lsRelocate = LocalSearchRelocate(instance, LocalSearchRelocate::InitialSolution::RANDOM);
-    //     LocalSearchSwap lsSwap = LocalSearchSwap(instance,LocalSearchSwap::InitialSolution::GREEDY2);
+    //     LocalSearchSwap lsSwap_g1 = LocalSearchSwap(instance,LocalSearchSwap::InitialSolution::GREEDY1);
+    //     LocalSearchSwap lsSwap_g2 = LocalSearchSwap(instance,LocalSearchSwap::InitialSolution::GREEDY2);
+    //     LocalSearchSwap lsSwap_rand = LocalSearchSwap(instance,LocalSearchSwap::InitialSolution::RANDOM);
+    //     VND vnd_greedy = VND(instance, VND::InitialSolution::GREEDY2, VND::FirstNeighborhood::RELOCATE);
+    //     VND vnd_random = VND(instance, VND::InitialSolution::RANDOM, VND::FirstNeighborhood::RELOCATE);
 
     //     greedySolver1.solve();
     //     greedySolver2.solve();
     //     random.solve();
     //     lsRelocate.solve();
-    //     lsSwap.solve();
+    //     lsSwap_g1.solve();
+    //     lsSwap_g2.solve();
+    //     lsSwap_rand.solve();
+    //     vnd_greedy.solve();
+    //     vnd_random.solve();
 
     //     GapSolution greedy1_sol = greedySolver1.getSolution();
     //     GapSolution greedy2_sol = greedySolver2.getSolution();
     //     GapSolution random_sol = random.getSolution();
     //     GapSolution relocate_sol = lsRelocate.getSolution();
-    //     GapSolution swap_sol = lsSwap.getSolution();
+    //     GapSolution swap_g1_sol = lsSwap_g1.getSolution();
+    //     GapSolution swap_g2_sol = lsSwap_g2.getSolution();
+    //     GapSolution swap_random_sol = lsSwap_rand.getSolution();
+    //     GapSolution vnd_greedy_sol = vnd_greedy.getSolution();
+    //     GapSolution vnd_random_sol = vnd_random.getSolution();
+
     //     file << filename << "," << filename << "," << instance.getM()-1 << "," << instance.getN() << 
     //     "," << greedy1_sol.getObjVal() << "," << greedy2_sol.getObjVal() << "," << random_sol.getObjVal()
-    //     << "," << relocate_sol.getObjVal()<< "," << swap_sol.getObjVal()<<","<<"gen_cost"<<","<<
-    //     "vnd_cost"<< "," <<greedy1_sol.getTime() << "," << greedy2_sol.getTime() << "," << 
-    //     random_sol.getTime()<< "," << relocate_sol.getTime()<< "," << swap_sol.getTime()
-    //     <<","<<"gen_time"<<","<<"vnd_time"<< std::endl;
+    //     << "," << relocate_sol.getObjVal()<< "," << swap_g1_sol.getObjVal()<<","<<swap_g2_sol.getObjVal()<<","<<
+    //     swap_random_sol.getObjVal()<< "," <<vnd_greedy_sol.getObjVal()<< "," <<vnd_random_sol.getObjVal()
+    //     << "," <<greedy1_sol.getTime() << "," << greedy2_sol.getTime() << "," << 
+    //     random_sol.getTime()<< "," << relocate_sol.getTime()<< "," << swap_g1_sol.getTime()
+    //     <<","<<swap_g2_sol.getTime()<<","<<swap_random_sol.getTime()<< "," <<vnd_greedy_sol.getTime()
+    //     << "," <<vnd_random_sol.getTime()<< std::endl;
 
     // }
     
@@ -119,7 +134,7 @@ int main(int argc, char** argv) {
     // std::cout<< "LS RELOCATE" << std::endl << solucion7;
     // std::cout<<"Factbilidad: " << solucion7.checkFeasibility(instancia)<<std::endl;
 
-    VND vnd = VND(instancia, VND::InitialSolution::GENETIC, VND::FirstNeighborhood::RELOCATE);
+    VND vnd = VND(instancia, VND::InitialSolution::RANDOM, VND::FirstNeighborhood::SWAP);
     vnd.solve();
     GapSolution solucionVnd = vnd.getSolution();
     std::cout<< "VND" << std::endl << solucionVnd;
