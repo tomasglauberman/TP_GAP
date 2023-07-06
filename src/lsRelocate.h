@@ -18,7 +18,7 @@ class LocalSearchRelocate{
     enum InitialSolution {GREEDY1, GREEDY2, RANDOM, CUSTOM, GENETIC};
 
     LocalSearchRelocate();
-    LocalSearchRelocate(GapInstance instance, InitialSolution initialSolution, GapSolution solution=GapSolution());
+    LocalSearchRelocate(GapInstance instance, InitialSolution initialSolution);
     ~LocalSearchRelocate();
     void solve();
     GapSolution getSolution();
