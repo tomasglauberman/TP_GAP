@@ -105,6 +105,17 @@ std::ostream& operator<<(std::ostream& os, const GapSolution& solution) {
     return os;
 }
 
+bool GapSolution::operator==(const GapSolution& other) const {
+    
+    for (int i = 0; i < this->_instance.getN(); i++) {
+        if (this->_sellers_assignment[i] != other._sellers_assignment[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 float GapSolution::getObjVal() const{
     return this->_obj_value;
 }

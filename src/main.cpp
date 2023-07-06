@@ -72,8 +72,8 @@ int main(int argc, char** argv) {
 
     // }
     
+    // std::string filename = "instances/gap/gap_a/a05100";
     std::string filename = "instances/real/real_instance";
-    // std::string filename = "instances/real/real_instance";
     // std::cout << "Reading file " << filename << std::endl;
     GapInstance instancia = GapInstance(filename);
 
@@ -95,8 +95,6 @@ int main(int argc, char** argv) {
     // std::cout<< "LS RELOCATE" << std::endl << solucion3;
     // std::cout<<"Factbilidad: " << solucion3.checkFeasibility(instancia)<<std::endl;
 
-    
-    
     // LocalSearchSwap lsSwap = LocalSearchSwap(instancia, LocalSearchSwap::InitialSolution::GREEDY2);
     // lsSwap.solve(); 
     // GapSolution solucion4 = lsSwap.getSolution();
@@ -115,19 +113,23 @@ int main(int argc, char** argv) {
     // std::cout<< "LS SWAP" << std::endl << solucion6;
     // std::cout<<"Factbilidad: " << solucion6.checkFeasibility(instancia)<<std::endl;
 
+    // LocalSearchRelocate lsRelocate1 = LocalSearchRelocate(instancia, LocalSearchRelocate::InitialSolution::RANDOM);
+    // lsRelocate1.solve();
+    // GapSolution solucion7 = lsRelocate1.getSolution();
+    // std::cout<< "LS RELOCATE" << std::endl << solucion7;
+    // std::cout<<"Factbilidad: " << solucion7.checkFeasibility(instancia)<<std::endl;
 
-    LocalSearchRelocate lsRelocate1 = LocalSearchRelocate(instancia, LocalSearchRelocate::InitialSolution::RANDOM);
-    lsRelocate1.solve();
-    GapSolution solucion7 = lsRelocate1.getSolution();
-    std::cout<< "LS RELOCATE" << std::endl << solucion7;
-    std::cout<<"Factbilidad: " << solucion7.checkFeasibility(instancia)<<std::endl;
+    // VND vnd = VND(instancia, VND::InitialSolution::RANDOM, VND::FirstNeighborhood::SWAP);
+    // vnd.solve();
+    // GapSolution solucionVnd = vnd.getSolution();
+    // std::cout<< "VND" << std::endl << solucionVnd;
+    // std::cout<<"Factbilidad: " << solucionVnd.checkFeasibility(instancia)<<std::endl;
 
-    VND vnd = VND(instancia, VND::InitialSolution::RANDOM, VND::FirstNeighborhood::SWAP);
-    vnd.solve();
-    GapSolution solucionVnd = vnd.getSolution();
-    std::cout<< "VND" << std::endl << solucionVnd;
-    std::cout<<"Factbilidad: " << solucionVnd.checkFeasibility(instancia)<<std::endl;
-
+    GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instancia, 100, 500);
+    genetic.solve();
+    GapSolution solucionGenetic = genetic.getSolution();
+    std::cout<< std::endl <<"GENETIC" << std::endl << solucionGenetic;
+    std::cout<<"Factbilidad: " << solucionGenetic.checkFeasibility(instancia)<<std::endl;
 
     return 0;
 }

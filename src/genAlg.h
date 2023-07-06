@@ -4,6 +4,7 @@
 #include "gap_instance.h"
 #include "gap_solution.h"
 #include "greedy1.h"
+#include "vnd.h"
 #include <vector>
 
 
@@ -30,6 +31,7 @@ class GeneticAlgorithmSolver  {
     GapSolution _binaryTournament();
     GapSolution _crossOver(GapSolution parent1, GapSolution parent2);
     GapSolution _mutation(GapSolution child);
+    void printProgressBar(int iteration, int totalIterations, int barWidth = 50);
 
 };
 

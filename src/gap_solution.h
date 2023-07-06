@@ -37,6 +37,7 @@ class GapSolution{
     float getObjVal() const;
     int getNotAssigned() const;
     friend std::ostream& operator<<(std::ostream& os, const GapSolution& solution);
+    bool operator==(const GapSolution& other) const;
 
     private:
     GapInstance _instance;
