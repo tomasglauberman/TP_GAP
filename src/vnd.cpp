@@ -28,7 +28,6 @@ VND::VND(GapInstance instance, InitialSolution initialSolution, FirstNeighborhoo
         genetic.solve();
         this->_solution = genetic.getSolution();
     } 
-
 };
 
 VND::~VND(){};
