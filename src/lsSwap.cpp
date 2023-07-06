@@ -27,6 +27,11 @@ LocalSearchSwap::LocalSearchSwap(GapInstance instance, InitialSolution initialSo
         greedySolver2.solve();
         this->_solution = greedySolver2.getSolution();
     }
+    else if (initialSolution == InitialSolution::GENETIC) {
+        GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instance, 100, 100);
+        genetic.solve();
+        this->_solution = genetic.getSolution();
+    }
 
 }
 

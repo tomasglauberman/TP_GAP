@@ -10,11 +10,12 @@ using namespace std;
 #include "greedy1.h"
 #include "greedy2.h"
 #include "random.h"
+#include "genAlg.h"
 #include <tuple>
 
 class LocalSearchRelocate{
     public:
-    enum InitialSolution {GREEDY1, GREEDY2, RANDOM, CUSTOM};
+    enum InitialSolution {GREEDY1, GREEDY2, RANDOM, CUSTOM, GENETIC};
 
     LocalSearchRelocate();
     LocalSearchRelocate(GapInstance instance, InitialSolution initialSolution, GapSolution solution=GapSolution());

@@ -10,12 +10,13 @@ using namespace std;
 #include "greedy1.h"
 #include "greedy2.h"
 #include "random.h"
+#include "genAlg.h"
 
 
 
 class LocalSearchSwap{
     public:
-    enum InitialSolution {RANDOM, GREEDY1, GREEDY2, CUSTOM};
+    enum InitialSolution {RANDOM, GREEDY1, GREEDY2, CUSTOM, GENETIC};
 
     LocalSearchSwap();
     LocalSearchSwap(GapInstance instance, InitialSolution initialSolution);

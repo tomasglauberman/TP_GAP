@@ -52,7 +52,7 @@ void GeneticAlgorithmSolver::printProgressBar(int iteration, int totalIterations
 };
 
 void GeneticAlgorithmSolver::solve() {
-    
+     auto start = std::chrono::high_resolution_clock::now();
     for (int i = 0; i < this->_generations * this->_populationSize; i++)
     {
         this->_replacement();
@@ -67,7 +67,9 @@ void GeneticAlgorithmSolver::solve() {
             bestSolution = this->_population[p];
         }
     }
-    
+    auto end = std::chrono::high_resolution_clock::now();
+    int64_t duration = std::chrono::duration_cast<std::chrono::microseconds>(end -start).count();
+    this->_solution.setTime(double(duration));
     this->_solution = bestSolution;
 
 };

@@ -125,7 +125,7 @@ int main(int argc, char** argv) {
     // std::cout<< "VND" << std::endl << solucionVnd;
     // std::cout<<"Factbilidad: " << solucionVnd.checkFeasibility(instancia)<<std::endl;
 
-    GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instancia, 100, 500);
+    GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instancia, 100, 100);
     genetic.solve();
     GapSolution solucionGenetic = genetic.getSolution();
     std::cout<< std::endl <<"GENETIC" << std::endl << solucionGenetic;

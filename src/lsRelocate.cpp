@@ -21,8 +21,11 @@ LocalSearchRelocate :: LocalSearchRelocate(GapInstance instance, InitialSolution
         Random random = Random(instance);
         random.solve();
         this->_solution = random.getSolution();
-    } else if (initialSolution == InitialSolution::CUSTOM) {
-        this->_solution = solution;
+    } 
+    else if (initialSolution == InitialSolution::GENETIC) {
+        GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instance, 100, 100);
+        genetic.solve();
+        this->_solution = genetic.getSolution();
     }
 
 };
