@@ -13,10 +13,7 @@ GeneticAlgorithmSolver::GeneticAlgorithmSolver(GapInstance instance, int populat
     this->_unfitness = std::vector<float>(populationSize);
 
     // Randomly generate initial population
-    VND vnd = VND(instance, VND::InitialSolution::RANDOM, VND::FirstNeighborhood::RELOCATE);
-    vnd.solve();
-    this->_population[0] = vnd.getSolution();
-    for (int i = 1; i < populationSize; i++) {
+    for (int i = 0; i < populationSize; i++) {
         this->_population[i] = GapSolution::randomSolution(instance);
 
         this->_fitness[i] = this->_population[i].getObjVal();
