@@ -4,7 +4,7 @@
 
 LocalSearchRelocate::LocalSearchRelocate(){}
 
-LocalSearchRelocate :: LocalSearchRelocate(GapInstance instance, InitialSolution initialSolution, GapSolution solution){
+LocalSearchRelocate :: LocalSearchRelocate(GapInstance instance, InitialSolution initialSolution){
     this->_instance = instance;
 
     if(initialSolution == InitialSolution::GREEDY1) {
