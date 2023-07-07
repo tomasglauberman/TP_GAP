@@ -136,7 +136,8 @@ void GeneticAlgorithmSolver::_replacement() {
         this->_population[highestUnfitnessIndex] = child;
         this->_unfitness[highestUnfitnessIndex] = this->_unfitnessFunction(child);
         this->_fitness[highestUnfitnessIndex] = child.getObjVal();
-    } else if (child.getObjVal() < highestFitness) {
+    } else {
+        // if (child.getObjVal() < highestFitness) {
         // std::cout << "Child solution inserted: " << child.getObjVal() << std::endl;
         this->_population[highestFitnessIndex] = child;
         this->_unfitness[highestFitnessIndex] = this->_unfitnessFunction(child);

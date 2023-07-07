@@ -16,7 +16,6 @@ GapSolution graspGen(GapInstance instance, int starts) {
         vnd.solve();
         newSolution = vnd.getSolution();
 
-
         if (newSolution.getObjVal() < solution.getObjVal()) {
             solution = newSolution;
         }

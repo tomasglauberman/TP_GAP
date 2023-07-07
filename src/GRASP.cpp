@@ -57,15 +57,14 @@ GapSolution GRASP::_generateSolution(int seed) {
 
         sort(costs_j.begin(), costs_j.end());
 
-        // SELECCIONAR DENTRO DE LOS PRIMEROS %16 PERO
+        // SELECCIONAR DENTRO DE LOS PRIMEROS 16% PERO
         // HAY QUE HACER FINE TUNING DE ESTE PARAMETRO
-        int first_p = this->_instance.getM()/6 - 1;
+        int first_p = this->_instance.getM()/6;
         std::uniform_int_distribution<int> dist(0, first_p);
         
         for (int i = 0; i < 15; i++)
         {
             int p = dist(randGen2);
-            // int p = randGen2() % 10;
             int store = costs_j[p].second;
             if (solution.getRemainingCapacity(store) >= this->_instance.getDemand(store,j)) {
                 solution.assign(store, j);
