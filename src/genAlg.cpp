@@ -162,8 +162,10 @@ float GeneticAlgorithmSolver::_unfitnessFunction(GapSolution solution) {
 }
 
 GapSolution GeneticAlgorithmSolver::_binaryTournament() {
-    int i = this->_randGen() % this->_populationSize;
-    int j = this->_randGen() % this->_populationSize;
+    std::uniform_int_distribution<int> dist(0, this->_populationSize-1);
+
+    int i = dist(this->_randGen);
+    int j = dist(this->_randGen);
     if (this->_fitness[i] < this->_fitness[j]) {
         return this->_population[i];
     } else {
@@ -173,7 +175,8 @@ GapSolution GeneticAlgorithmSolver::_binaryTournament() {
 
 GapSolution GeneticAlgorithmSolver::_crossOver(GapSolution parent1, GapSolution parent2) {
     GapSolution child = GapSolution(this->_instance);
-    int p = this->_randGen() % this->_instance.getN();
+    std::uniform_int_distribution<int> dist(0, this->_instance.getN()-1);
+    int p = dist(this->_randGen);
 
     // Assign first p stores from parent1, rest from parent2
     for (int j = 0; j < p; j++) {
@@ -191,8 +194,9 @@ GapSolution GeneticAlgorithmSolver::_crossOver(GapSolution parent1, GapSolution 
 }
 
 GapSolution GeneticAlgorithmSolver::_mutation(GapSolution solution) {
-    int j1 = this->_randGen() % this->_instance.getN();
-    int j2 = this->_randGen() % this->_instance.getN();
+    std::uniform_int_distribution<int> dist(0, this->_instance.getN()-1);
+    int j1 = dist(this->_randGen);
+    int j2 = dist(this->_randGen);
 
     if (j1 == j2) {
         return solution;
