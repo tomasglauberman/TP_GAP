@@ -15,7 +15,7 @@
 #include "random.h"
 #include "vnd.h"
 
-#include "grasp.h"
+#include "multistartGen.h"
 
 enum Algorithm {GREEDY1, GREEDY2, LS_RELOCATE, LS_SWAP, VND_S, VND_R, GENETIC, MULTISTART_GEN};
 
@@ -42,7 +42,8 @@ int main(int argc, char* argv[]) {
         {"LS_SWAP", LS_SWAP},
         {"VND_S", VND_S},
         {"VND_R", VND_R},
-        {"GENETIC", GENETIC}
+        {"GENETIC", GENETIC},
+        {"MULTISTART_GEN", MULTISTART_GEN}
     };
 
     if (argc < 3) {
@@ -179,6 +180,7 @@ int main(int argc, char* argv[]) {
             int starts = atoi(argv[4]);
             GapSolution solution = graspGen(instancia, starts);
             std::cout<< "MULTISTART GENTIC" << std::endl << solution;
+            solution.outputSolution(outputFile);
             std::cout << solution;
         }
 
