@@ -1,4 +1,5 @@
 #include "gap_solution.h"
+#include <random>
 
 GapSolution::GapSolution() {}
 
@@ -101,6 +102,7 @@ std::ostream& operator<<(std::ostream& os, const GapSolution& solution) {
     os << "Objective Value: " << solution.getObjVal() << std::endl;
     os << "Time: " << solution.getTime() << " microseconds" << std::endl;
     os << "Cant sin asignar: " << solution.getNotAssigned() << std::endl;
+    os << "Factibilidad: " << solution.checkFeasibility(solution._instance) << std::endl;
 
     return os;
 }
@@ -124,7 +126,7 @@ int GapSolution::getNotAssigned() const{
     return this->_not_assigned;
 }
 
-bool GapSolution::checkFeasibility(GapInstance &instance) const {
+bool GapSolution::checkFeasibility(GapInstance const &instance) const {
 
     vector<int> remaining_capacity = vector<int>(instance.getM());
     for (int i=0; i < instance.getM(); i++) {
@@ -154,12 +156,13 @@ int GapSolution::getRemainingCapacity(int store) const {
 
 
 GapSolution GapSolution::randomSolution(GapInstance instance, int seed) {
-    std::srand(seed);
+    std::mt19937 randGen;
+    randGen.seed(seed);
 
     GapSolution solution = GapSolution(instance);
 
     for (int j = 0; j < instance.getN(); j++) {
-        int store = rand() % (instance.getM()-1);
+        int store = randGen() % (instance.getM()-1);
         solution.assign(store, j);
     }
     return solution;

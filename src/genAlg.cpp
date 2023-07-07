@@ -2,7 +2,7 @@
 
 GeneticAlgorithmSolver::GeneticAlgorithmSolver() {}
 
-GeneticAlgorithmSolver::GeneticAlgorithmSolver(GapInstance instance, int populationSize, int generations) {
+GeneticAlgorithmSolver::GeneticAlgorithmSolver(GapInstance instance, int populationSize, int generations, int seed) {
     this->_instance = instance;
     this->_solution = GapSolution(instance);
 
@@ -12,6 +12,8 @@ GeneticAlgorithmSolver::GeneticAlgorithmSolver(GapInstance instance, int populat
     this->_fitness = std::vector<float>(populationSize);
     this->_unfitness = std::vector<float>(populationSize);
 
+    this->_randGen.seed(seed);
+
     // Randomly generate initial population
     for (int i = 0; i < populationSize; i++) {
         this->_population[i] = GapSolution::randomSolution(instance);
@@ -20,8 +22,6 @@ GeneticAlgorithmSolver::GeneticAlgorithmSolver(GapInstance instance, int populat
         this->_unfitness[i] = this->_unfitnessFunction(this->_population[i]);
     }
 
-    // Set seed
-    std::srand(15);
 };
 
 GeneticAlgorithmSolver::~GeneticAlgorithmSolver() {};
@@ -71,7 +71,6 @@ void GeneticAlgorithmSolver::solve() {
 
 };
 
-
 void GeneticAlgorithmSolver::_replacement() {
     // Choose parents
     GapSolution parent1 = this->_binaryTournament();
@@ -82,32 +81,6 @@ void GeneticAlgorithmSolver::_replacement() {
 
     // Mutation
     child = this->_mutation(child);
-
-    // Improve feasibility
-    // for (int i = 0; i < this->_instance.getM()-1; i++)
-    // {
-    //     int remaining_capacity = child.getRemainingCapacity(i);
-    //     if (remaining_capacity < 0) {
-    //         // Choose first seller assigned to i and assign it to first store with capacity
-    //         for (int j = 0; j < this->_instance.getN(); j++)
-    //         {
-    //             if (child.getStoreAssigned(j) == i) {
-    //                 for (int i2 = child.getStoreAssigned(j) + 1; i2 != child.getStoreAssigned(j); i2 = (i2 + 1) % this->_instance.getM()-1) {
-    //                     if(child.getRemainingCapacity(i2) >= this->_instance.getDemand(i2, j)) {
-    //                         child.unassign(i, j);
-    //                         if(i2 != this->_instance.getM()-1) {
-    //                             child.assign(i2, j);
-    //                         }
-    //                         goto next;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     next:
-    //     continue;
-    // }
-
 
     // Improve quality of solution
     for (int j = 0; j < this->_instance.getN(); j++)
@@ -189,8 +162,8 @@ float GeneticAlgorithmSolver::_unfitnessFunction(GapSolution solution) {
 }
 
 GapSolution GeneticAlgorithmSolver::_binaryTournament() {
-    int i = rand() % this->_populationSize;
-    int j = rand() % this->_populationSize;
+    int i = this->_randGen() % this->_populationSize;
+    int j = this->_randGen() % this->_populationSize;
     if (this->_fitness[i] < this->_fitness[j]) {
         return this->_population[i];
     } else {
@@ -200,7 +173,7 @@ GapSolution GeneticAlgorithmSolver::_binaryTournament() {
 
 GapSolution GeneticAlgorithmSolver::_crossOver(GapSolution parent1, GapSolution parent2) {
     GapSolution child = GapSolution(this->_instance);
-    int p = rand() % this->_instance.getN();
+    int p = this->_randGen() % this->_instance.getN();
 
     // Assign first p stores from parent1, rest from parent2
     for (int j = 0; j < p; j++) {
@@ -218,8 +191,8 @@ GapSolution GeneticAlgorithmSolver::_crossOver(GapSolution parent1, GapSolution 
 }
 
 GapSolution GeneticAlgorithmSolver::_mutation(GapSolution solution) {
-    int j1 = rand() % this->_instance.getN();
-    int j2 = rand() % this->_instance.getN();
+    int j1 = this->_randGen() % this->_instance.getN();
+    int j2 = this->_randGen() % this->_instance.getN();
 
     if (j1 == j2) {
         return solution;

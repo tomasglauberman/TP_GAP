@@ -30,7 +30,7 @@ class GapSolution{
 
     //float getObjVal_aux() const;
     int getRemainingCapacity(int store) const;
-    bool checkFeasibility(GapInstance &instance) const;
+    bool checkFeasibility(GapInstance const &instance) const;
     //int getNotAssigned_aux() const;
 
     static GapSolution randomSolution(GapInstance instance, int seed=0);

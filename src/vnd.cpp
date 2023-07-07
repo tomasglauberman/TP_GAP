@@ -24,7 +24,7 @@ VND::VND(GapInstance instance, InitialSolution initialSolution, FirstNeighborhoo
         this->_solution = random.getSolution();
     }   
     else if(initialSolution == InitialSolution::GENETIC) {
-        GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instance, 100, 1000);
+        GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instance, 100, 200);
         genetic.solve();
         this->_solution = genetic.getSolution();
     } 
@@ -86,4 +86,8 @@ void VND::solve() {
 
 GapSolution VND::getSolution() {
     return this->_solution;
+};
+
+void VND::setSolution(GapSolution solution) {
+    this->_solution = solution;
 };

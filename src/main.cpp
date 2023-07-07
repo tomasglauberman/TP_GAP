@@ -1,7 +1,10 @@
-#include <string>
 #include <iostream>
 #include <ostream>
+#include <filesystem>
+
+#include <string>
 #include <unordered_map>
+
 #include "gap_instance.h"
 #include "gap_solution.h"
 #include "greedy1.h"
@@ -11,9 +14,10 @@
 #include "genAlg.h"
 #include "random.h"
 #include "vnd.h"
-#include <filesystem>
 
-enum Algorithm {GREEDY1, GREEDY2, LS_RELOCATE, LS_SWAP, VND_S, VND_R, GENETIC};
+#include "grasp.h"
+
+enum Algorithm {GREEDY1, GREEDY2, LS_RELOCATE, LS_SWAP, VND_S, VND_R, GENETIC, MULTISTART_GEN};
 
 int main(int argc, char* argv[]) {
 
@@ -64,7 +68,6 @@ int main(int argc, char* argv[]) {
             GapSolution solucion = greedySolver1.getSolution();
             solucion.outputSolution(outputFile);
             std::cout<< "GREEDY 1" << std::endl << solucion;
-            std::cout<<"Factbilidad: " << solucion.checkFeasibility(instancia)<<std::endl;
             break;
         }
         case GREEDY2: {
@@ -73,7 +76,6 @@ int main(int argc, char* argv[]) {
             GapSolution solucion = greedySolver2.getSolution();
             solucion.outputSolution(outputFile);
             std::cout<< "GREEDY 2" << std::endl << solucion;
-            std::cout<<"Factbilidad: " << solucion.checkFeasibility(instancia)<<std::endl;
             break;
         }
         case LS_RELOCATE: {
@@ -94,7 +96,6 @@ int main(int argc, char* argv[]) {
             GapSolution solucion = lsRelocate.getSolution();
             solucion.outputSolution(outputFile);
             std::cout<< "LS RELOCATE" << std::endl << solucion;
-            std::cout<<"Factbilidad: " << solucion.checkFeasibility(instancia)<<std::endl;
             break;
         }
         case LS_SWAP: {
@@ -115,7 +116,6 @@ int main(int argc, char* argv[]) {
             GapSolution solucion = lsRelocate.getSolution();
             solucion.outputSolution(outputFile);
             std::cout<< "LS SWAP" << std::endl << solucion;
-            std::cout<<"Factbilidad: " << solucion.checkFeasibility(instancia)<<std::endl;
             break;
         }
         case VND_S: {
@@ -138,7 +138,6 @@ int main(int argc, char* argv[]) {
             GapSolution solucionVnd = vnd.getSolution();
             solucionVnd.outputSolution(outputFile);
             std::cout<< "VND" << std::endl << solucionVnd;
-            std::cout<<"Factbilidad: " << solucionVnd.checkFeasibility(instancia)<<std::endl;
             break;
         }
 
@@ -162,7 +161,6 @@ int main(int argc, char* argv[]) {
             GapSolution solucionVnd = vnd.getSolution();
             solucionVnd.outputSolution(outputFile);
             std::cout<< "VND" << std::endl << solucionVnd;
-            std::cout<<"Factbilidad: " << solucionVnd.checkFeasibility(instancia)<<std::endl;
             break;
         }
 
@@ -174,9 +172,16 @@ int main(int argc, char* argv[]) {
             GapSolution solucionGenetic = genetic.getSolution();
             solucionGenetic.outputSolution("results");
             std::cout<< "GENETIC" << std::endl << solucionGenetic;
-            std::cout<<"Factbilidad: " << solucionGenetic.checkFeasibility(instancia)<<std::endl;
             break;
         }
+
+        case MULTISTART_GEN: {
+            int starts = atoi(argv[4]);
+            GapSolution solution = graspGen(instancia, starts);
+            std::cout<< "MULTISTART GENTIC" << std::endl << solution;
+            std::cout << solution;
+        }
+
         default:
             std::cout << "ALGORITMO INCORRECTO" << std::endl;
             break;

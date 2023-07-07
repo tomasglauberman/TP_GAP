@@ -25,6 +25,7 @@ class VND{
     ~VND();
     void solve();
     GapSolution getSolution();
+    void setSolution(GapSolution solution);
     tuple<float, int, int, int> getBestRelocate();
 
 
