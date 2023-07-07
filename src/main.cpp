@@ -14,12 +14,14 @@
 #include "genAlg.h"
 #include "random.h"
 #include "vnd.h"
-
 #include "multistartGen.h"
+#include "GRASP.h"
 
-enum Algorithm {GREEDY1, GREEDY2, LS_RELOCATE, LS_SWAP, VND_S, VND_R, GENETIC, MULTISTART_GEN};
+enum Algorithm {GREEDY1, GREEDY2, LS_RELOCATE, LS_SWAP, VND_S, VND_R, GENETIC, MULTISTART_GEN, GRASP_S};
+
 
 int main(int argc, char* argv[]) {
+
 
     std::string filename = argv[1];
     std::string outputFile = argv[2];
@@ -43,7 +45,8 @@ int main(int argc, char* argv[]) {
         {"VND_S", VND_S},
         {"VND_R", VND_R},
         {"GENETIC", GENETIC},
-        {"MULTISTART_GEN", MULTISTART_GEN}
+        {"MULTISTART_GEN", MULTISTART_GEN},
+        {"GRASP", GRASP_S}
     };
 
     if (argc < 3) {
@@ -181,7 +184,17 @@ int main(int argc, char* argv[]) {
             GapSolution solution = graspGen(instancia, starts);
             std::cout<< "MULTISTART GENTIC" << std::endl << solution;
             solution.outputSolution(outputFile);
-            std::cout << solution;
+            break;
+        }
+
+        case GRASP_S: {
+            int starts = atoi(argv[4]);
+            GRASP grasp = GRASP(instancia);
+            grasp.solve(starts);
+            GapSolution solucionGrasp = grasp.getSolution();
+            // solucionGrasp.outputSolution(outputFile);
+            std::cout<< "GRASP" << std::endl << solucionGrasp; 
+            break;
         }
 
         default:
