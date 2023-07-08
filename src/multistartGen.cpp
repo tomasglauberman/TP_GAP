@@ -7,11 +7,11 @@ GapSolution graspGen(GapInstance instance, int starts) {
     GapSolution solution = GapSolution(instance);
 
     for (int i = 0; i < starts; i++) {
-        GeneticAlgorithmSolver genSolver  = GeneticAlgorithmSolver(instance, 10, 15, i*2+1);
+        GeneticAlgorithmSolver genSolver  = GeneticAlgorithmSolver(instance, 5, 10, i*53);
         genSolver.solve();
         GapSolution newSolution = genSolver.getSolution();
 
-        VND vnd = VND(instance, VND::InitialSolution::CUSTOM, VND::FirstNeighborhood::RELOCATE);
+        VND vnd = VND(instance, VND::InitialSolution::CUSTOM, VND::FirstNeighborhood::SWAP);
         vnd.setSolution(newSolution);
         vnd.solve();
         newSolution = vnd.getSolution();
