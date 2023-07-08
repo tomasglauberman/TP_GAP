@@ -4,6 +4,7 @@
 #include "gap_instance.h"
 #include "gap_solution.h"
 #include "greedy1.h"
+#include "random.h"
 #include "vnd.h"
 #include <chrono>
 #include <vector>

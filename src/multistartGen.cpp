@@ -7,7 +7,7 @@ GapSolution graspGen(GapInstance instance, int starts) {
     GapSolution solution = GapSolution(instance);
 
     for (int i = 0; i < starts; i++) {
-        GeneticAlgorithmSolver genSolver  = GeneticAlgorithmSolver(instance, 8, 80, i*2+1);
+        GeneticAlgorithmSolver genSolver  = GeneticAlgorithmSolver(instance, 10, 15, i*2+1);
         genSolver.solve();
         GapSolution newSolution = genSolver.getSolution();
 

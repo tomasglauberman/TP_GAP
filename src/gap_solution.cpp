@@ -158,11 +158,12 @@ int GapSolution::getRemainingCapacity(int store) const {
 GapSolution GapSolution::randomSolution(GapInstance instance, int seed) {
     std::mt19937 randGen;
     randGen.seed(seed);
+    std::uniform_int_distribution<int> dist(0, instance.getM()-2);
 
     GapSolution solution = GapSolution(instance);
 
     for (int j = 0; j < instance.getN(); j++) {
-        int store = randGen() % (instance.getM()-1);
+        int store = dist(randGen);
         solution.assign(store, j);
     }
     return solution;

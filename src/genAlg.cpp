@@ -14,10 +14,13 @@ GeneticAlgorithmSolver::GeneticAlgorithmSolver(GapInstance instance, int populat
 
     this->_randGen.seed(seed);
 
+
     // Randomly generate initial population
     for (int i = 0; i < populationSize; i++) {
-        this->_population[i] = GapSolution::randomSolution(instance);
-
+        // Random random = Random(instance);
+        // random.solve();
+        // this->_population[i] = random.getSolution();
+        this->_population[i] = GapSolution::randomSolution(instance, i);
         this->_fitness[i] = this->_population[i].getObjVal();
         this->_unfitness[i] = this->_unfitnessFunction(this->_population[i]);
     }
@@ -60,7 +63,7 @@ void GeneticAlgorithmSolver::solve() {
     GapSolution bestSolution = this->_population[0];
     for (int p = 0; p < this->_populationSize; p++)
     {
-        if(this->_population[p].getObjVal() < bestSolution.getObjVal()) {
+        if(this->_population[p].getObjVal() < bestSolution.getObjVal() && this->_population[p].checkFeasibility(this->_instance)) {
             bestSolution = this->_population[p];
         }
     }
@@ -82,6 +85,32 @@ void GeneticAlgorithmSolver::_replacement() {
     // Mutation
     child = this->_mutation(child);
 
+    // Improve feasibility of solution
+    // for (int i = 0; i < this->_instance.getM()-1; i++)
+    // {
+    //     if (child.getRemainingCapacity(i) < 0)
+    //     {
+    //         for (int j = 0; j < this->_instance.getN(); j++)
+    //         {
+    //             if (child.getStoreAssigned(j) == i)
+    //             {
+    //                 child.unassign(i, j);
+    //                 for (int k = 0; k < this->_instance.getM()-1; k++)
+    //                 {
+    //                     if (child.getRemainingCapacity(k) >= this->_instance.getDemand(k, j))
+    //                     {
+    //                         child.assign(k, j);
+    //                         goto next;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     next:
+    //     continue;
+
+    // }
+
     // Improve quality of solution
     for (int j = 0; j < this->_instance.getN(); j++)
     {
@@ -91,20 +120,19 @@ void GeneticAlgorithmSolver::_replacement() {
         for (int i = 0; i < this->_instance.getM()-1; i++)
         {
             if((this->_instance.getCost(i, j) < min_cost) && 
-               (this->_solution.getRemainingCapacity(i) >= this->_instance.getDemand(i,j))) {
+               (child.getRemainingCapacity(i) >= this->_instance.getDemand(i,j))) {
                 min_store = i;
                 min_cost = this->_instance.getCost(i, j);
             }
         }
 
         if(!(min_store == this->_instance.getM()-1)){   
-            if(this->_solution.getStoreAssigned(j) != this->_instance.getM()-1) {
-                this->_solution.unassign(this->_solution.getStoreAssigned(j), j);
+            if(child.getStoreAssigned(j) != this->_instance.getM()-1) {
+                child.unassign(child.getStoreAssigned(j), j);
             }
 
-            this->_solution.assign(min_store, j);
+            child.assign(min_store, j);
         }
-          
     }
 
     //  Check identical solutions in population
@@ -137,36 +165,27 @@ void GeneticAlgorithmSolver::_replacement() {
         this->_unfitness[highestUnfitnessIndex] = this->_unfitnessFunction(child);
         this->_fitness[highestUnfitnessIndex] = child.getObjVal();
     } else {
-        // if (child.getObjVal() < highestFitness) {
-        // std::cout << "Child solution inserted: " << child.getObjVal() << std::endl;
         this->_population[highestFitnessIndex] = child;
         this->_unfitness[highestFitnessIndex] = this->_unfitnessFunction(child);
         this->_fitness[highestFitnessIndex] = child.getObjVal();
     }
+
+    // std::cout << "Inserted solution: " << child.getObjVal() << std::endl;
 }
 
 float GeneticAlgorithmSolver::_unfitnessFunction(GapSolution solution) {
     float unfitness = 0;
     for (int i = 0; i < this->_instance.getM()-1; i++) {
-        int capacity = this->_instance.getCapacity(i);
-        int used = 0;
-
-        // Podria usarse remainingCapacity creo
-        for (int j = 0; j < this->_instance.getN(); j++) {
-            if (solution.getStoreAssigned(j) == i) {
-                used += this->_instance.getDemand(i, j);
-            }
-        }
-        unfitness += std::max(0, used - capacity);
+        unfitness += std::max(0, -solution.getRemainingCapacity(i));
     }
     return unfitness;
 }
 
 GapSolution GeneticAlgorithmSolver::_binaryTournament() {
     std::uniform_int_distribution<int> dist(0, this->_populationSize-1);
-
     int i = dist(this->_randGen);
     int j = dist(this->_randGen);
+
     if (this->_fitness[i] < this->_fitness[j]) {
         return this->_population[i];
     } else {
@@ -185,6 +204,7 @@ GapSolution GeneticAlgorithmSolver::_crossOver(GapSolution parent1, GapSolution 
             child.assign(parent1.getStoreAssigned(j), j);
         }
     }
+
     for (int j = p; j < this->_instance.getN(); j++) {
         if(parent2.isSellerAssign(j)) {
             child.assign(parent2.getStoreAssigned(j), j);
@@ -194,31 +214,35 @@ GapSolution GeneticAlgorithmSolver::_crossOver(GapSolution parent1, GapSolution 
     return child;
 }
 
+
 GapSolution GeneticAlgorithmSolver::_mutation(GapSolution solution) {
     std::uniform_int_distribution<int> dist(0, this->_instance.getN()-1);
-    int j1 = dist(this->_randGen);
-    int j2 = dist(this->_randGen);
 
-    if (j1 == j2) {
-        return solution;
-    }
+    for (int s=0; s < 3; s++) {
+        int j1 = dist(this->_randGen);
+        int j2 = dist(this->_randGen);
 
-    int store1 = solution.getStoreAssigned(j1);
-    int store2 = solution.getStoreAssigned(j2);
+        if (j1 == j2) {
+            return solution;
+        }
 
-    // Swap stores assigned to j1 and j2
-    if (solution.isSellerAssign(j1)) {
-        solution.unassign(store1, j1);
-    }
-    if (solution.isSellerAssign(j2)) {
-        solution.unassign(store2, j2);
-    }
+        int store1 = solution.getStoreAssigned(j1);
+        int store2 = solution.getStoreAssigned(j2);
 
-    if (store1 != this->_instance.getM()-1 ) {
-        solution.assign(store1, j2);
-    }
-    if (store2 != this->_instance.getM()-1 ) {
-        solution.assign(store2, j1);
+        // Swap stores assigned to j1 and j2
+        if (solution.isSellerAssign(j1)) {
+            solution.unassign(store1, j1);
+        }
+        if (solution.isSellerAssign(j2)) {
+            solution.unassign(store2, j2);
+        }
+
+        if (store1 != this->_instance.getM()-1 ) {
+            solution.assign(store1, j2);
+        }
+        if (store2 != this->_instance.getM()-1 ) {
+            solution.assign(store2, j1);
+        }
     }
 
     // solution.assign(store1, j2);

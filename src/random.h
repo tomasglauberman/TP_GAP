@@ -16,7 +16,6 @@ class Random{
     void solve();
     GapSolution getSolution();
 
-
     private:
     GapInstance _instance;
     GapSolution _solution;

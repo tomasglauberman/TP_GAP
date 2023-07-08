@@ -1,5 +1,6 @@
 #include "random.h"
 #include <chrono>
+#include "gap_solution.h"
 
 Random::Random(){}
 
