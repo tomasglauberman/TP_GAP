@@ -28,10 +28,8 @@ class GapSolution{
     void setTime(double time);
     double getTime() const;
 
-    //float getObjVal_aux() const;
     int getRemainingCapacity(int store) const;
     bool checkFeasibility(GapInstance const &instance) const;
-    //int getNotAssigned_aux() const;
 
     static GapSolution randomSolution(GapInstance instance, int seed=0);
     float getObjVal() const;

@@ -67,9 +67,7 @@ void LocalSearchSwap::solve(){
             {
                 this->_solution.assign(storej2, j1);
             }
-            //No puedo asignar aca sin verificar que no sean fantasmas
-            // this->_solution.assign(storej1, j2);
-            // this->_solution.assign(storej2, j1);
+
         }
        
     }

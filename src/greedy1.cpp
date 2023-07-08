@@ -1,5 +1,4 @@
 #include "greedy1.h"
-#include <chrono>
 
 GreedySolver1::GreedySolver1(){}
 

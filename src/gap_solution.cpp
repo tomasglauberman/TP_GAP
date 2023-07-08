@@ -30,7 +30,6 @@ void GapSolution::assign(int store, int seller) {
     this->_sellers_assignment[seller] = store;
     this->_remaining_capacity[store] -= this->_instance.getDemand(store,seller);
 
-    // Es necesrio aca?? SI
     this->_not_assigned --;
     this->_obj_value =  this->_obj_value - 3* this->_instance.getDMax() + this->_instance.getCost(store, seller);
 }
@@ -46,7 +45,6 @@ void GapSolution::unassign(int store, int seller) {
     this->_sellers_assignment[seller] = this->_instance.getM()-1;
     this->_remaining_capacity[store] += this->_instance.getDemand(store,seller);
 
-    // Es necesrio aca?? SI
     this->_not_assigned++;
     this->_obj_value =  this->_obj_value + 3 * this->_instance.getDMax() - this->_instance.getCost(store, seller);
 }
@@ -66,37 +64,10 @@ double GapSolution::getTime() const{
     return this->_time;
 }
 
-//Es O(N)
-// float GapSolution::getObjVal_aux() const {
-
-//     float vr = 0;
-//     for (int j = 0; j < this->_instance.getN(); j++)
-//     {
-//         vr += this->_instance.getCost(this->_sellers_assignment[j], j);
-//     }
-//     return vr;
-//     //Quedo O(N) No podriamos hacerla O(1)??
-//     // return this->_obj_value;
-// }
-
 int GapSolution::getStoreAssigned(int seller) const {
     return this->_sellers_assignment[seller];
 }
 
-//Es O(N)
-// int GapSolution::getNotAssigned_aux() const{
-
-//     int vr = 0;
-//     for (int j = 0; j < this->_instance.getN(); j++)
-//     {
-//         if(this->_sellers_assignment[j] == this->_instance.getM()-1){
-//             vr += 1;
-//         }
-//     }
-//     return vr;
-//     //Quedo O(N) No podriamos hacerla O(1)??
-//     // return this->_not_assigned;
-// }
 
 std::ostream& operator<<(std::ostream& os, const GapSolution& solution) {
     os << "Objective Value: " << solution.getObjVal() << std::endl;

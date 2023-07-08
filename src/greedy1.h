@@ -4,9 +4,11 @@
 #include<vector>
 #include<string>
 #include<iostream>
+#include <chrono>
 using namespace std;
 #include "gap_instance.h"
 #include "gap_solution.h"
+
 
 class GreedySolver1{
     public:

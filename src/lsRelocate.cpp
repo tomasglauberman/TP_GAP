@@ -23,7 +23,7 @@ LocalSearchRelocate :: LocalSearchRelocate(GapInstance instance, InitialSolution
         this->_solution = random.getSolution();
     } 
     else if (initialSolution == InitialSolution::GENETIC) {
-        GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instance, 100, 100);
+        GeneticAlgorithmSolver genetic = GeneticAlgorithmSolver(instance, 20, 50);
         genetic.solve();
         this->_solution = genetic.getSolution();
     }
@@ -43,8 +43,6 @@ void LocalSearchRelocate::solve(){
         int initial_store = std::get<2>(vr);
         int final_store = std::get<3>(vr);
 
-        //cout<< mejora << " " << change_seller << " " << initial_store << " " << final_store << endl;
-
         if (mejora < 0) {
             if(this->_solution.isSellerAssign(change_seller)) {
                 this->_solution.unassign(initial_store, change_seller);
@@ -61,16 +59,6 @@ void LocalSearchRelocate::solve(){
     auto end = std::chrono::high_resolution_clock::now();
     int64_t duration = std::chrono::duration_cast<std::chrono::microseconds>(end -start).count();
     this->_solution.setTime(double(duration));
-
-    //std::cout << this->_solution.getObjVal() << std::endl;
-
-    // std::cout << this->_solution << std::endl;
-
-    // for(int i = 0; i<this->_instance.getM(); i++){
-    //     std::cout << "Store " << i << " remaining capacity: " << this->_remaining_capacity[i] << std::endl;
-    // }
-
-    //std::cout << this->_solution.checkFeasibility(this->_instance) << std::endl;
 } 
 
 GapSolution LocalSearchRelocate::getSolution(){
