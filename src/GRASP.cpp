@@ -19,7 +19,7 @@ void GRASP::solve(int iterations){
     {
         GapSolution solution = this->_generateSolution(i);
         VND vnd = VND(this->_instance, VND::InitialSolution::CUSTOM, VND::FirstNeighborhood::RELOCATE);
-        vnd.setSolution(this->_generateSolution((i+1)*503));
+        vnd.setSolution(this->_generateSolution((i+1)*15));
         vnd.solve();
 
         if (vnd.getSolution().getObjVal() < this->_solution.getObjVal()) {
